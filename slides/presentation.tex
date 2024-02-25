@@ -4,7 +4,14 @@
 
 \title{Maintainable Embedded Linux Solutions}
 \author{Thomas Irgang \and Simone Weiß}
-\date{\today}
+\institute{EASTERHEGG 2024 - RABBIT PROTOTYPING}
+\date{March 31, 2024}
+\titlegraphic{
+    \includegraphics[width=2cm]{assets/logo.png}
+}
+
+\newcommand\pro{\item[$+$]}
+\newcommand\con{\item[$-$]}
 
 \begin{document}
 
@@ -14,28 +21,48 @@
 
 \section{Why Linux?}
 
-% Comp. Arduino, ESP/FreeRTOS, Linux
-
 \begin{frame}{Do I need Linux for my project?}
-    \begin{columns}
-    \column{0.33\textwidth}
-        \centering
-        Arduino
-    \column{0.33\textwidth}
-        \centering
-        ESP32/FreeRTOS
-    \column{0.34\textwidth}
-        \centering
-        Linux
-    \end{columns}
+	\begin{tabular}{cccc}
+	&\includegraphics[width=1.9cm]{assets/Pixabay_Arduino_integrated-circuit-441289_1280.jpg} &
+	\includegraphics[width=1.9cm]{assets/ESP32.png} & 
+	\includegraphics[width=1.9cm]{assets/Raspberry_Pi.png} \\
+	&\textbf{Arduino} & \textbf{ESP32 FreeRTOS} & \textbf{SBC Linux} \\
+	real-time & + &  + & - \\
+	energy & + & o & - \\
+	UI & - & - & + \\
+	IO & - & o & + \\
+	CPU & - & o & + \\
+	\end{tabular}
 \end{frame}
 
-% Projects
-% media center, 2 years <-> home automation 20+ years
-
-% Required maintenance
-
-% Reusability
+\begin{frame}{What's the life-time of my project?}
+	\begin{columns}
+    \column{0.33\textwidth}
+        \centering
+        \textbf{Experiment}
+        \begin{itemize}
+        		\item few months
+        		\item no maintenance
+        		\item some reusability
+        \end{itemize}
+    \column{0.33\textwidth}
+        \centering
+        \textbf{Media-Center}
+        \begin{itemize}
+        		\item some years
+        		\item typical IT distribution maintenance
+        		\item no reusability needed
+        \end{itemize}
+    \column{0.34\textwidth}
+        \centering
+        \textbf{Home Automation}
+        \begin{itemize}
+        		\item more than 15 years
+        		\item maintenance and upgrades
+        		\item reusability for mid-term upgrade needed
+        \end{itemize}
+    \end{columns}
+\end{frame}
 
 \section{Building an embedded Linux solution}
 
