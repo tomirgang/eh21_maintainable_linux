@@ -1,5 +1,7 @@
 \documentclass{beamer}
 
+\usepackage{hyperref}
+
 \usetheme{Marburg}
 
 \title{Maintainable Embedded Linux Solutions}
@@ -64,21 +66,146 @@
     \end{columns}
 \end{frame}
 
-\section{Building an embedded Linux solution}
-
-% Raspberry Pi approach
-
-% Yocto / Buildroot
-
-% Elbe / Debos / Kiwi
-
-% comp
-
-\section{Remixing an embedded Linux}
-
-% comp Elbe / Debos / Kiwi
+\section{Embedded Linux}
 
 
+\begin{frame}{The "golden image" approach}
+	\begin{columns}
+    \column{0.5\textwidth}
+        \centering
+        \begin{itemize}
+        		\item starting from an existing Linux image, e.g. Raspberry Pi OS,
+        		\item install additional required tools,
+        		\item and configure the tools
+        		\item and the Linux image.
+        \end{itemize}
+    \column{0.5\textwidth}
+        \centering
+        \begin{itemize}
+        		\pro easy approach
+        		\pro maintained by base distribution
+        		\con solution and base distribution are mixed
+        		\con maintenance out of control
+        		\con no support for variants
+        		\con huge amount of not needed software
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{The source build toolkit approach}
+	\begin{columns}
+    \column{0.5\textwidth}
+        \centering
+        \begin{itemize}
+        		\item Yocto or Buildroot
+        		\item build all packages from source
+        		\item using project specific config and patches
+        \end{itemize}
+    \column{0.5\textwidth}
+        \centering
+        \begin{itemize}
+        		\pro optimal solution possible
+        		\pro minimized amount of resources
+        		\pro solution separated and reusable
+        		\pro support for variants
+        		\con learning curve
+        		\con high maintenance effort
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{The remix distribution approach}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\centering
+		\begin{itemize}
+			\item solution-specific remix of existing distribution
+			\item build a custom image using the binary packages of the base distribution
+		\end{itemize}
+		\column{0.5\textwidth}
+		\centering
+		\begin{itemize}
+			\pro low maintenance effort
+			\pro lower amount of resources
+			\pro solution separated and reusable
+			\pro support for variants
+			\con learning curve
+			\con limited optimization
+		\end{itemize}
+	\end{columns}
+\end{frame}
+
+\section{Remixing a distribution}
+
+\begin{frame}{Tools for building a remix distribution}
+	\begin{tabular}{c|ccc}
+		& \textbf{Elbe} & \textbf{Debos} & \textbf{Kiwi-ng} \\
+		\hline
+		target & Embedded Image & Debian remix & Linux remix \\ 
+		format & deb & deb & deb, rpm, arch \\
+		cross img & yes & yes & yes \\
+		cross pkg & yes & no & no \\
+		compiler & yes & no & no \\
+	\end{tabular}
+\end{frame}
+
+\subsection{Kiwi-ng}
+
+\begin{frame}{Kiwi-ng}
+	\begin{itemize}
+		\item Appliance builder
+	\end{itemize}
+	\begin{definition} 
+		An appliance is a ready to use image of an operating system including a pre-configured application for a specific use case. 
+	\end{definition}
+	\begin{itemize}
+		\item Supports all major package managers
+		\item Image description using XML and config scripts
+		\item Docs: \url{https://osinside.github.io/kiwi/}
+		\item Source: \url{https://github.com/OSInside/kiwi}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Kiwi-ng: Raspberry Pi image}
+	\begin{itemize}
+		\item Source: \url{https://github.com/OSInside/kiwi-descriptions/tree/main/ubuntu/aarch64/ubuntu-jammy-rpi}
+		\item Steps:
+		\begin{itemize}
+			\item install \url{https://pypi.org/project/kiwi/}
+			\item install \url{https://pypi.org/project/kiwi-boxed-plugin/}
+			\item get image description
+			\item run image build
+			\item copy image to SD card
+		\end{itemize}
+		\item more details: TODO: add URL
+	\end{itemize}
+\end{frame}
+
+\subsection{Debos}
+
+\subsection{Elbe}
+
+\section{Example project}
+
+\subsection{Raspberry PI image}
+
+% simple RPi CLI image
+
+\subsection{Embedded project}
+
+% TOOD more involved example project
+
+\section{Evaluation}
+
+% Yocto
+
+% Raspbian
+
+% comp with kiwi
+
+% comp with debos
+
+% comp with elbe
 
 
 \end{document}
