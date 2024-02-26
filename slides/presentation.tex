@@ -168,7 +168,8 @@
 
 \begin{frame}{Kiwi-ng: Raspberry Pi image}
 	\begin{itemize}
-		\item Source: \url{https://github.com/OSInside/kiwi-descriptions/tree/main/ubuntu/aarch64/ubuntu-jammy-rpi}
+		\item Source: \url{https://t.ly/f3ubM}
+		\item based on Ubuntu Jammy
 		\item Steps:
 		\begin{itemize}
 			\item install \url{https://pypi.org/project/kiwi/}
@@ -177,13 +178,67 @@
 			\item run image build
 			\item copy image to SD card
 		\end{itemize}
-		\item more details: TODO: add URL
+		\item more details: \url{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/kiwi-ng}
 	\end{itemize}
 \end{frame}
 
 \subsection{Debos}
 
+\begin{frame}{Debos}
+	\begin{itemize}
+		\item Debian-based OS image builder
+	\end{itemize}
+	\begin{definition} 
+		debos is a tool to make the creation of various Debian-based OS images simpler. While most other tools focus on specific use-cases, debos is more meant as a tool-chain to make common actions trivial while providing enough rope to do whatever tweaking that might be required behind the scene.
+	\end{definition}
+	\begin{itemize}
+		\item Supports only Debian packages
+		\item Image description using YAML
+		\item Docs: \url{https://pkg.go.dev/github.com/go-debos/debos}
+		\item Source: \url{https://github.com/go-debos/debos}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Debos: Raspberry Pi image}
+	\begin{itemize}
+		\item Source: \url{https://t.ly/B4vg7}
+		\item based on Debian Bullseye
+		\item Steps:
+		\begin{itemize}
+			\item TODO
+		\end{itemize}
+		\item more details: TODO: add URL
+	\end{itemize}
+\end{frame}
+
 \subsection{Elbe}
+
+\begin{frame}{Elbe}
+	\begin{itemize}
+		\item Debian-based embedded image builder
+	\end{itemize}
+	\begin{definition} 
+		Debian-based system to generate root filesystems for embedded devices.
+	\end{definition}
+	\begin{itemize}
+		\item Supports only Debian packages
+		\item Image description using XML
+		\item Docs: \url{https://elbe-rfs.org/docs/sphinx/index.html}
+		\item Source: \url{https://github.com/Linutronix/elbe}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Elbe: Raspberry Pi image}
+	\begin{itemize}
+		\item Source: TODO
+		\item based on TODO
+		\item Steps:
+		\begin{itemize}
+			\item TODO
+		\end{itemize}
+		\item more details: TODO: add URL
+	\end{itemize}
+\end{frame}
 
 \section{Example project}
 
