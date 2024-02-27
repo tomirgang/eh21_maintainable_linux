@@ -30,10 +30,10 @@ kiwi-ng --debug --target-arch=aarch64 --config=kiwi.yml \
 
 ## Flash the image
 
-Use dd:
+Use dd as root:
 
 ```bash
-xzcat kiwi-test-image-rpi.aarch64.img.xz | dd of=/dev/SDCARDNAMEGOESHERE
+xzcat build/kiwi-test-image-rpi.aarch64-1.0.0-0.raw.xz | dd of=/dev/SDCARDNAMEGOESHERE
 ```
 
 Or use a UI tool like https://etcher.balena.io/.
