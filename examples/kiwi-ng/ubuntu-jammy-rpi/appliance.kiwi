@@ -27,11 +27,11 @@
         <user password="linux" pwdformat="plain"  home="/home/ubuntu" name="ubuntu" groups="users,kvm" shell="/bin/bash"/>
     </users>
 
+    <repository type="apt-deb" repository_gpgcheck="false" package_gpgcheck="false" imageinclude="true">
+        <source path="obs://Virtualization:Appliances:Builder/xUbuntu_22.04"/>
+    </repository>
     <repository type="apt-deb" alias="Jammy" distribution="jammy" components="main multiverse restricted universe" repository_gpgcheck="false">
         <source path="http://ports.ubuntu.com/ubuntu-ports"/>
-    </repository>
-    <repository type="apt-deb" alias="xubuntu" repository_gpgcheck="false">
-        <source path="https://download.opensuse.org/repositories/Virtualization:/Appliances:/Builder/xUbuntu_22.04"/>
     </repository>
 
     <packages type="image">

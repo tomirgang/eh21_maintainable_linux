@@ -22,7 +22,8 @@ Modifications:
 ## Build the image
 
 ```bash
-kiwi-ng --debug --target-arch=aarch64 system boxbuild \
+kiwi-ng --debug --target-arch=aarch64 --config=kiwi.yml \
+  system boxbuild \
   --box ubuntu --aarch64 --cpu=cortex-a57 --machine=virt --no-accel -- \
   --description=ubuntu-jammy-rpi --target-dir=build
 ```
