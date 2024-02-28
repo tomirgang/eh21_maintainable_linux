@@ -9,8 +9,7 @@ Image based in tutorial https://bootlin.com/blog/elbe-automated-building-of-ubun
 
 - Install elbe: `sudo apt install elbe`
 - Create initvm: `elbe initvm create --directory /data/elbe/demovm` 
-- Ensure initvm is running: `elbe initvm start`
-- 
+- Build the image: `elbe initvm submit rpi-image/aarch64_rpi4.xml`
 
 ## Build the image
 
