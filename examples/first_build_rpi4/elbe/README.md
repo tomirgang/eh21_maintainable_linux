@@ -9,12 +9,11 @@ Image based in tutorial https://bootlin.com/blog/elbe-automated-building-of-ubun
 
 - Install elbe: `sudo apt install elbe`
 - Create initvm: `elbe initvm create --directory /data/elbe/demovm` 
-- Build the image: `elbe initvm submit rpi-image/aarch64_rpi4.xml`
 
 ## Build the image
 
 ```bash
-debos rpi64/debimage-rpi64.yaml
+elbe initvm submit rpi-image/aarch64_rpi4.xml
 ```
 
 ## Flash the image
@@ -22,7 +21,7 @@ debos rpi64/debimage-rpi64.yaml
 Use dd as root:
 
 ```bash
-gzip -dc debian-rpi64.img.gz | dd of=/dev/SDCARDNAMEGOESHERE
+gzip -dc sdcard.img.tar.gz | dd of=/dev/SDCARDNAMEGOESHERE
 ```
 
 Or use a UI tool like https://etcher.balena.io/.
