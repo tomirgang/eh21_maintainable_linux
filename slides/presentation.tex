@@ -2,7 +2,7 @@
 
 \usepackage{hyperref}
 
-\usetheme{Marburg}
+\usetheme{Antibes}
 
 \title{Maintainable Embedded Linux Solutions}
 \author{Thomas Irgang \and Simone Weiß}
@@ -149,15 +149,12 @@
 	\end{tabular}
 \end{frame}
 
-\subsection{Kiwi-ng}
+\subsection{Yocto}
 
 \begin{frame}{Yocto}
-	\begin{itemize}
-		\item Yocto 
-	\end{itemize}
-	\begin{definition} 
-		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution. It also provides Poky as a reference distribution.
-	\end{definition}
+	\begin{block}{Whats included?}
+		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution and a SDK. It also provides Poky as a reference distribution. Layer for many boards available
+	\end{block}
 	\begin{itemize}
 		\item Will build packages and images based on recipes and configuration
 		\item Metadata is using Bash and Python
@@ -168,16 +165,44 @@
 
 \begin{frame}{Yocto: Raspberry Pi image}
 	\begin{itemize}
-		\item Source: \href{https://github.com/OSInside/kiwi-descriptions/tree/main/ubuntu/aarch64/ubuntu-jammy-rpi}{Github}
+		\item Source: \href{https://git.yoctoproject.org/poky}{poky}, \href{https://git.yoctoproject.org/meta-raspberrypi/}{bsp}
 		\item based on Poky
 		\item Steps:
 		\begin{itemize}
-			\item install \url{pip3 install kas}
+			\item install kas: pip3 install kas
 			\item get kas.yml
 			\item run kas build
 			\item copy image to SD card
 		\end{itemize}
 		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/yocto}{Github}
+	\end{itemize}
+\end{frame}
+
+\subsection{Buildroot}
+
+\begin{frame}{Buildroot}
+	\begin{block}{Whats included?}
+		Generate embedded Linux systems (Rootfs, Kernel, Bootloader, SDK)  based on a "Makefile collection" and configuration for a number of boards. Simpler then Yocto(easier, but less features)
+	\end{block}
+	\begin{itemize}
+		\item Will build components and images from source
+		\item Style is based on Makefile and Kconfig 
+		\item Docs: \url{https://buildroot.org/downloads/manual/manual.html}
+		\item Source: \url{https://gitlab.com/buildroot.org/buildroot/}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Buildroot: Raspberry Pi image}
+	\begin{itemize}
+		\item Source: \href{https://gitlab.com/buildroot.org/buildroot/}{GitLab}
+		\item Steps:
+		\begin{itemize}
+			\item install \href{https://buildroot.org/downloads/manual/manual.html\#requirement}{dependencies}
+			\item make raspberrypi4\_64\_defconfig
+			\item make
+			\item copy image to SD card
+		\end{itemize}
+		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/buildroot}{Github}
 	\end{itemize}
 \end{frame}
 
