@@ -2,12 +2,7 @@
 
 Building an image for the Raspberry Pi 4 using Debos.
 
-Original image: https://github.com/go-debos/debos-recipes/tree/main/rpi64
-
-Modifications:
-- Update firmware version for Raspberry Pi 4
-
-TODO: Image doesn't work with new firmware. New firmware complains about missing partition table.
+Inspired by: https://github.com/go-debos/debos-recipes/tree/main/rpi64
 
 ## Prepare the image build
 
