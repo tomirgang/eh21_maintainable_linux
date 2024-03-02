@@ -14,22 +14,20 @@
 		<suite>bookworm</suite>
 	</project>
 	<target>
-		<hostname>lx64</hostname>
-		<domain>linutronix.de</domain>
-		<passwd>foo</passwd>
-		<console>ttyAMA0,115200</console>
+		<hostname>rpi64</hostname>
+		<console>serial0,115200</console>
 		<images>
 			<msdoshd>
 				<name>sdcard.img</name>
-				<size>1500MiB</size>
+				<size>4GiB</size>
 				<partition>
-					<size>50MiB</size>
+					<size>128MiB</size>
 					<label>boot</label>
-					<bootable />
+					<bootable/>
 				</partition>
 				<partition>
 					<size>remain</size>
-					<label>rfs</label>
+					<label>root</label>
 				</partition>
 			</msdoshd>
 		</images>
@@ -42,29 +40,47 @@
 				</fs>
 			</bylabel>
 			<bylabel>
-				<label>rfs</label>
+				<label>root</label>
 				<mountpoint>/</mountpoint>
 				<fs>
-					<type>ext2</type>
-					<fs-finetuning>
-						<device-command>tune2fs -i 0 {device}</device-command>
-					</fs-finetuning>
+					<type>ext4</type>
 				</fs>
 			</bylabel>
 		</fstab>
-		<install-recommends />
-		<finetuning>
-			<rm>/var/cache/apt/archives/*.deb</rm>
-		</finetuning>
+		<install-recommends/>
 		<pkg-list>
-			<pkg>linux-image-rpi</pkg>
-			<pkg>raspi-firmware</pkg>
-			<pkg>u-boot-rpi</pkg>
+			<pkg>linux-image-arm64</pkg>
+			<pkg>zstd</pkg>
+			<pkg>apt-utils</pkg>
 			<pkg>systemd</pkg>
-			<pkg>bash</pkg>
+			<pkg>systemd-resolved</pkg>
+			<pkg>systemd-timesyncd</pkg>
 			<pkg>vim-tiny</pkg>
 			<pkg>busybox</pkg>
+			<pkg>bash</pkg>
 			<pkg>openssh-server</pkg>
 		</pkg-list>
+		<finetuning>
+			<!-- set root password -->
+			<command>echo "root:linux" | chpasswd</command>
+        	<!-- config raspi firmware -->
+			<command>echo 'ROOTPART="LABEL=root"' &gt;&gt; /etc/default/raspi-firmware</command>
+			<command>echo 'KERNEL_ARCH="arm64"' &gt;&gt; /etc/default/raspi-firmware</command>
+			<command>echo 'init=/usr/lib/systemd/systemd' &gt;&gt; /etc/default/raspi-extra-cmdline</command>
+			<!-- regenerate config files -->
+			<command>update-initramfs -u -k all</command>
+			<!-- enable systemd services -->
+			<!-- network management -->
+			<command>systemctl enable systemd-networkd</command>
+			<!-- DNS resolving -->
+			<command>systemctl enable systemd-resolved</command>
+			<!-- NTP client -->
+			<command>systemctl enable systemd-timesyncd</command>
+		</finetuning>
 	</target>
-</ns0:RootFileSystem>
+<archive>QlpoOTFBWSZTWZWGswAAAI1/hMqQAEBAEf+CDFNQG25rnqAAAIQIMAD4UGkjQAAjAgbQ0aATDAaM
+hoMIBoBpoAARURpqn6KbRqAZGjIaeU0aG1PtMbgwDRWmaLbNBHDV1HRCAXCRTQFVqTE0pBQIq05Y
+byqSWJySKZZ5hx7YcdaRItVLwV25Y4+94J2eG9KbIGuFiQ3b0mThXGqCQ3VppCq0KTmEUrGyA0ts
+SaTsGQVw7seGzhLKoyVxYenQ4JSSCjEINi9mQcuswOCcR00A6XCWwcEGA5iSTnENSfyUzS9tbBPx
+JBSLEM0lgHXJuUD/F3JFOFCQlYazAA==
+</archive></ns0:RootFileSystem>
