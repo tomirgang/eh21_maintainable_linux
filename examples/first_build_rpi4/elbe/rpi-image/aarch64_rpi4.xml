@@ -10,11 +10,27 @@
 			<primary_host>ftp.de.debian.org</primary_host>
 			<primary_path>/debian</primary_path>
 			<primary_proto>http</primary_proto>
+			<url-list>
+				<url>
+					<binary>http://deb.debian.org/debian-security bookworm-security main</binary>
+					<source>http://deb.debian.org/debian-security bookworm-security main</source>
+				</url>
+				<url>
+					<binary>http://deb.debian.org/debian bookworm non-free-firmware</binary>
+					<source>http://deb.debian.org/debian bookworm non-free-firmware</source>
+				</url>
+				<url>
+					<binary>http://deb.debian.org/debian-security bookworm-security non-free-firmware</binary>
+					<source>http://deb.debian.org/debian-security bookworm-security non-free-firmware</source>
+				</url>
+			</url-list>
 		</mirror>
 		<suite>bookworm</suite>
 	</project>
 	<target>
 		<hostname>rpi64</hostname>
+		<domain></domain>
+		<passwd>linux</passwd>
 		<console>serial0,115200</console>
 		<images>
 			<msdoshd>
@@ -50,6 +66,8 @@
 		<install-recommends/>
 		<pkg-list>
 			<pkg>linux-image-arm64</pkg>
+			<pkg>firmware-brcm80211</pkg>
+			<pkg>raspi-firmware</pkg>
 			<pkg>zstd</pkg>
 			<pkg>apt-utils</pkg>
 			<pkg>systemd</pkg>
@@ -61,9 +79,7 @@
 			<pkg>openssh-server</pkg>
 		</pkg-list>
 		<finetuning>
-			<!-- set root password -->
-			<command>echo "root:linux" | chpasswd</command>
-        	<!-- config raspi firmware -->
+			<!-- config raspi firmware -->
 			<command>echo 'ROOTPART="LABEL=root"' &gt;&gt; /etc/default/raspi-firmware</command>
 			<command>echo 'KERNEL_ARCH="arm64"' &gt;&gt; /etc/default/raspi-firmware</command>
 			<command>echo 'init=/usr/lib/systemd/systemd' &gt;&gt; /etc/default/raspi-extra-cmdline</command>
