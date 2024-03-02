@@ -135,6 +135,52 @@
 	\end{columns}
 \end{frame}
 
+\section{The source build toolkit}
+
+\begin{frame}{Tools for source builds}
+	\begin{tabular}{c|ccc}
+		& \textbf{Yocto} & \textbf{Buildroot}  \\
+		\hline
+		target & Embedded Image & Debian remix \\ 
+		format & deb, rpm, arch & none \\
+		cross img & yes & yes \\
+		cross pkg & yes & no \\
+		compiler & yes & yes \\
+	\end{tabular}
+\end{frame}
+
+\subsection{Kiwi-ng}
+
+\begin{frame}{Yocto}
+	\begin{itemize}
+		\item Yocto 
+	\end{itemize}
+	\begin{definition} 
+		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution. It also provides Poky as a reference distribution.
+	\end{definition}
+	\begin{itemize}
+		\item Will build packages and images based on recipes and configuration
+		\item Metadata is using Bash and Python
+		\item Docs: \url{https://docs.yoctoproject.org/}
+		\item Source: \url{git://git.yoctoproject.org/poky}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Yocto: Raspberry Pi image}
+	\begin{itemize}
+		\item Source: \href{https://github.com/OSInside/kiwi-descriptions/tree/main/ubuntu/aarch64/ubuntu-jammy-rpi}{Github}
+		\item based on Poky
+		\item Steps:
+		\begin{itemize}
+			\item install \url{pip3 install kas}
+			\item get kas.yml
+			\item run kas build
+			\item copy image to SD card
+		\end{itemize}
+		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/yocto}{Github}
+	\end{itemize}
+\end{frame}
+
 \section{Remixing a distribution}
 
 \begin{frame}{Tools for building a remix distribution}
@@ -266,5 +312,6 @@
 
 % comp with elbe
 
+% evaluation ideas: performnace, maintainability, flexibility, BSP available?
 
 \end{document}
