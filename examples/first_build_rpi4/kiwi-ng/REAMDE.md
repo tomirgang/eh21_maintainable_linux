@@ -17,7 +17,7 @@ Modifications:
 - Activate venv: `source ./venv/bin/activate`
 - Install kiwi-ng: `pip install kiwi`
 - Install boxed plugin: `pip install kiwi-boxed-plugin`
-- Add bin folder of venv to path: `export PATH=${PWD}\venv\bin:$PATH`
+- Add bin folder of venv to path: `export PATH=${PWD}/venv/bin:$PATH`
 
 ## Build the image
 
