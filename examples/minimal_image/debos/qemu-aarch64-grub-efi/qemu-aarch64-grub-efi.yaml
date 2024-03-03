@@ -1,0 +1,72 @@
+{{- $mirror := or .mirror "http://deb.debian.org/debian" -}}
+{{- $suite := or .suite "bookworm" -}}
+{{- $image := or .image "qemu-aarch64-grub-efi.img" -}}
+
+architecture: arm64
+
+actions:
+  - action: debootstrap
+    suite: {{ $suite }}
+    components:
+      - main
+    mirror: {{ $mirror }}
+    variant: minbase
+
+  - action: apt
+    description: Install extra packages
+    packages:
+      - grub-efi-arm64
+      - linux-image-arm64
+      - systemd
+      - busybox-static
+
+  - action: run
+    description: Add hostname
+    chroot: true
+    command: echo qemu64 > /etc/hostname
+  
+  - action: run
+    description: Set root password
+    chroot: true
+    script: scripts/setup-user.sh
+
+  - action: run
+    description: Symlink systemd as init
+    chroot: true
+    command: ln -s /usr/lib/systemd/systemd /sbin/init
+
+  - action: image-partition
+    imagename: {{ $image }}
+    imagesize: 2GB
+    partitiontype: msdos
+    mountpoints:
+      - mountpoint: /
+        partition: root
+      - mountpoint: /boot/efi
+        partition: efi
+        options: [ x-systemd.automount ]
+    partitions:
+      - name: efi
+        fs: vfat
+        start: 0%
+        end: 50MB
+        flags: [ boot ]
+      - name: root
+        fs: ext4
+        start: 50MB
+        end: 100%
+
+  - action: filesystem-deploy
+    description: Deploying filesystem onto image
+
+  - action: run
+    chroot: true
+    command: update-grub
+
+  - action: run
+    chroot: true
+    command: grub-install --target=arm64-efi --no-nvram
+
+  - action: run
+    chroot: true
+    command: mkdir -p /boot/efi/EFI/BOOT && cp /boot/efi/EFI/debian/grubaa64.efi /boot/efi/EFI/BOOT/BOOTAA64.EFI

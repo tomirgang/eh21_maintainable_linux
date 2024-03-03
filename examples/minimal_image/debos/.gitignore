@@ -1,0 +1,6 @@
+*.img.*
+*.img
+root
+root/**/*
+initrd.img-*
+vmlinuz-*
