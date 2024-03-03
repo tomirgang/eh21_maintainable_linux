@@ -17,8 +17,6 @@ elbe initvm submit --skip-build-bin --skip-build-sources qemu-aarch64-minimal/ar
 
 ## Run the image
 
-Extract the disk image `build/qemu_aarch64_minimal.aarch64-1.0.0-0.tar.xz`, then run QEMU:
-
 ```bash
 qemu-system-aarch64 \
 	-machine virt \
@@ -27,14 +25,15 @@ qemu-system-aarch64 \
 	-nographic \
 	-netdev user,id=mynet0,hostfwd=tcp::2222-:22 \
 	-device virtio-net-pci,netdev=mynet0 \
-	-kernel build/qemu_aarch64_minimal.aarch64-1.0.0-0/qemu_aarch64_minimal.aarch64-1.0.0-5.15.0-25-generic.kernel \
-  	-append "earlycon root=/dev/vda" \
-  	-drive if=virtio,format=raw,file=build/qemu_aarch64_minimal.aarch64-1.0.0-0/qemu_aarch64_minimal.aarch64-1.0.0
+	-kernel vmlinuz \
+	-append "earlycon root=/dev/vda2" \
+  	-initrd initrd.img \
+  	-drive if=virtio,format=raw,file=sdcard.img
 ```
 
 ## Results
 
-- build time: 6625,77s user 218,60s system 258% cpu 44:03,58 total
+- build time:
 - startup time:
 - size:
 - runnig services:
