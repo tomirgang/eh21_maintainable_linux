@@ -1,0 +1,50 @@
+<ns0:RootFileSystem xmlns:ns0="https://www.linutronix.de/projects/Elbe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" created="2009-05-20T08:50:56" revision="6" xsi:schemaLocation="https://www.linutronix.de/projects/Elbe dbsfed.xsd">
+	<initvm>
+		<buildtype>amd64</buildtype>
+		<mirror>
+			<primary_host>archive.ubuntu.com</primary_host>
+			<primary_path>/ubuntu</primary_path>
+			<primary_proto>http</primary_proto>
+			<url-list>
+				<url>
+					<binary>
+						http://archive.ubuntu.com/ubuntu jammy-security main
+					</binary>
+					<source>
+						http://archive.ubuntu.com/ubuntu jammy-security main
+					</source>
+				</url>
+				<url>
+					<binary>
+						http://archive.ubuntu.com/ubuntu jammy-updates main
+					</binary>
+					<source>
+						http://archive.ubuntu.com/ubuntu jammy-updates main
+					</source>
+				</url>
+				<url>
+					<binary>
+						http://archive.ubuntu.com/ubuntu jammy-backports main
+					</binary>
+					<source>
+						http://archive.ubuntu.com/ubuntu jammy-backports main
+					</source>
+				</url>
+			</url-list>
+		</mirror>
+		<suite>jammy</suite>
+		<pkg-list>
+			<pkg>openssh-server</pkg>
+			<pkg>debootstrap</pkg>
+			<pkg>reprepro</pkg>
+		</pkg-list>
+		<preseed>
+			<conf owner="pbuilder" key="pbuilder/mirrorsite" type="string" value="http://archive.ubuntu.com/ubuntu"/>
+		</preseed>
+		<size>80G</size>
+		<swap-size>10GiB</swap-size>
+		<img>qcow2</img>
+		<portforwarding>
+		</portforwarding>
+	</initvm>
+</ns0:RootFileSystem>
