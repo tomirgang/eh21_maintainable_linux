@@ -92,5 +92,9 @@
 			<pkg>systemd</pkg>
 			<pkg>busybox-static</pkg>
 		</pkg-list>
+		<finetuning>
+			<!-- Symlink systemd as init -->
+			<command>ln -s /usr/lib/systemd/systemd /sbin/init</command>
+		</finetuning>
 	</target>
 </ns0:RootFileSystem>
