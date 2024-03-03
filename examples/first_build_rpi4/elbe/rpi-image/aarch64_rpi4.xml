@@ -32,25 +32,35 @@
 		<domain></domain>
 		<passwd>linux</passwd>
 		<console>serial0,115200</console>
+		<!-- speed up build with debootstrap variant minbase.
+		Using minbase here and explicit install of systemd later
+		on speed up the installation process, since it reduces
+		the emulated part (run in QEMU) of the installation
+		significant.
+		-->
+		<debootstrap>
+			<variant>minbase</variant>
+		</debootstrap>
+		<!-- define an sdcard image -->
 		<images>
 			<msdoshd>
 				<name>sdcard.img</name>
-				<size>4GiB</size>
+				<size>4GB</size>
 				<partition>
-					<size>128MiB</size>
-					<label>boot</label>
-					<bootable/>
+					<size>128MB</size>
+					<label>firmware</label>
 				</partition>
 				<partition>
 					<size>remain</size>
 					<label>root</label>
+					<bootable/>
 				</partition>
 			</msdoshd>
 		</images>
 		<fstab>
 			<bylabel>
-				<label>boot</label>
-				<mountpoint>/boot</mountpoint>
+				<label>firmware</label>
+				<mountpoint>/boot/firmware</mountpoint>
 				<fs>
 					<type>vfat</type>
 				</fs>
@@ -63,6 +73,12 @@
 				</fs>
 			</bylabel>
 		</fstab>
+		<project-finetuning>
+			<losetup img="sdcard.img">
+				<extract_partition part="1">scard1.img</extract_partition>
+				<extract_partition part="2">scard2.img</extract_partition>
+			</losetup>
+		</project-finetuning>
 		<install-recommends/>
 		<pkg-list>
 			<pkg>linux-image-arm64</pkg>
@@ -94,9 +110,5 @@
 			<command>systemctl enable systemd-timesyncd</command>
 		</finetuning>
 	</target>
-<archive>QlpoOTFBWSZTWZWGswAAAI1/hMqQAEBAEf+CDFNQG25rnqAAAIQIMAD4UGkjQAAjAgbQ0aATDAaM
-hoMIBoBpoAARURpqn6KbRqAZGjIaeU0aG1PtMbgwDRWmaLbNBHDV1HRCAXCRTQFVqTE0pBQIq05Y
-byqSWJySKZZ5hx7YcdaRItVLwV25Y4+94J2eG9KbIGuFiQ3b0mThXGqCQ3VppCq0KTmEUrGyA0ts
-SaTsGQVw7seGzhLKoyVxYenQ4JSSCjEINi9mQcuswOCcR00A6XCWwcEGA5iSTnENSfyUzS9tbBPx
-JBSLEM0lgHXJuUD/F3JFOFCQlYazAA==
-</archive></ns0:RootFileSystem>
+	<archivedir>overlays/networkd</archivedir>
+</ns0:RootFileSystem>

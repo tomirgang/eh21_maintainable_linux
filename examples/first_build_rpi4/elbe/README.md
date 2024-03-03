@@ -4,6 +4,8 @@ Building an image for the Raspberry Pi 4 using elbe.
 
 Image based in tutorial https://bootlin.com/blog/elbe-automated-building-of-ubuntu-images-for-a-raspberry-pi-3b/
 
+TODO: integrated image has broken disks, extracted disk partitions and tbz is OK!
+
 ## Prepare the image build
 
 Setup the initvm:
@@ -14,7 +16,7 @@ Setup the initvm:
 ## Build the image
 
 ```bash
-elbe initvm submit rpi-image/aarch64_rpi4.xml
+elbe initvm submit --skip-build-bin --skip-build-sources rpi-image/aarch64_rpi4.xml
 ```
 
 > [!IMPORTANT]
