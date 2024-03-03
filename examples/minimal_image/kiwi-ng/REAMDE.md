@@ -1,5 +1,7 @@
 # Kiwi-ng minimal QEMU image
 
+TODO: Fix QEMU command. Kernel isn't able to find root fs.
+
 ## Prepare the image build
 
 - Prepare venv: `python3 -m venv venv`
@@ -19,6 +21,8 @@ time kiwi-ng --debug --target-arch=aarch64 --config=kiwi.yml \
 
 ## Run the image
 
+Extract the disk image `build/qemu_aarch64_minimal.aarch64-1.0.0-0.tar.xz`, then run QEMU:
+
 ```bash
 qemu-system-aarch64 \
 	-machine virt \
@@ -27,15 +31,14 @@ qemu-system-aarch64 \
 	-nographic \
 	-netdev user,id=mynet0,hostfwd=tcp::2222-:22 \
 	-device virtio-net-pci,netdev=mynet0 \
-	-kernel /path/to/custom/Image \
-  -append "earlycon root=/dev/vda1" \
-  -drive if=virtio,format=qcow2,file=disk.img \
-	-bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd
+	-kernel build/qemu_aarch64_minimal.aarch64-1.0.0-0/qemu_aarch64_minimal.aarch64-1.0.0-5.15.0-25-generic.kernel \
+  	-append "earlycon root=/dev/sda" \
+  	-drive if=virtio,format=raw,file=build/qemu_aarch64_minimal.aarch64-1.0.0-0/qemu_aarch64_minimal.aarch64-1.0.0
 ```
 
 ## Results
 
-- build time:
+- build time: 5822,46s user 147,02s system 268% cpu 37:01,00 total
 - startup time:
 - size:
 - runnig services:

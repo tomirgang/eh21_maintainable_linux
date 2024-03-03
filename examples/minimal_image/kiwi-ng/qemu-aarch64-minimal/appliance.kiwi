@@ -10,7 +10,7 @@
     <preferences arch="aarch64">
         <version>1.0.0</version>
         <packagemanager>apt</packagemanager>
-        <type image="kis" filesystem="ext4">
+        <type image="kis" filesystem="ext4" initrd_system="none">
             <size unit="G">2</size>
         </type>
     </preferences>
@@ -29,8 +29,6 @@
     <packages type="image">
         <!-- kernel -->
         <package name="linux-image-generic"/>
-        <!-- system, only for buildtime -->
-        <package name="dracut"/>
         <!-- system -->
         <package name="systemd"/>
         <package name="busybox-static"/>
