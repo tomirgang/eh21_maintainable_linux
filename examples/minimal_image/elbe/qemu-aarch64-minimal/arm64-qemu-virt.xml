@@ -44,12 +44,6 @@
 		<debootstrap>
 			<variant>minbase</variant>
 		</debootstrap>
-		<package>
-			<!-- build a tarball of the target image -->
-			<tar>
-				<name>root.tgz</name>
-			</tar>
-		</package>
 		<images>
 			<msdoshd>
 				<name>sdcard.img</name>
