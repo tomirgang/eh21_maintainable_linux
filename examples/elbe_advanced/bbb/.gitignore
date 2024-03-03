@@ -1,0 +1,7 @@
+None
+None/**/*
+elbe-build*
+elbe-build*/**/*
+project
+*.deb
+elbe-repodir-*.xml
