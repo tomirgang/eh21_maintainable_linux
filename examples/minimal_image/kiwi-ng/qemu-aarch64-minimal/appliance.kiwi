@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<image schemaversion="7.4" name="qemu_aarch64_minimal">
+    <description type="system">
+        <author>Thomas Irgang</author>
+        <contact>thomas@irgang.eu</contact>
+        <specification>Minimum qemu amd64 image with systemd</specification>
+    </description>
+
+    <preferences arch="aarch64">
+        <version>1.0.0</version>
+        <packagemanager>apt</packagemanager>
+        <type image="kis" filesystem="ext4">
+            <size unit="G">2</size>
+        </type>
+    </preferences>
+
+    <users>
+        <user password="linux" pwdformat="plain" home="/root" name="root" groups="root"/>
+    </users>
+
+    <repository type="apt-deb" repository_gpgcheck="false" package_gpgcheck="false" imageinclude="true">
+        <source path="obs://Virtualization:Appliances:Builder/xUbuntu_22.04"/>
+    </repository>
+    <repository type="apt-deb" alias="Jammy" distribution="jammy" components="main multiverse restricted universe" repository_gpgcheck="false">
+        <source path="http://ports.ubuntu.com/ubuntu-ports"/>
+    </repository>
+
+    <packages type="image">
+        <!-- kernel -->
+        <package name="linux-image-generic"/>
+        <!-- system, only for buildtime -->
+        <package name="dracut"/>
+        <!-- system -->
+        <package name="systemd"/>
+        <package name="busybox-static"/>
+    </packages>
+
+    <packages type="bootstrap"/>
+</image>
