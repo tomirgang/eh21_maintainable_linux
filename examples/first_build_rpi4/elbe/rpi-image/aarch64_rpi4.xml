@@ -74,10 +74,7 @@
 			</bylabel>
 		</fstab>
 		<project-finetuning>
-			<losetup img="sdcard.img">
-				<extract_partition part="1">scard1.img</extract_partition>
-				<extract_partition part="2">scard2.img</extract_partition>
-			</losetup>
+			<set_packer packer="none">sdcard.img</set_packer>
 		</project-finetuning>
 		<install-recommends/>
 		<pkg-list>
