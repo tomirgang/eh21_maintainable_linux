@@ -1,0 +1,96 @@
+<ns0:RootFileSystem xmlns:ns0="https://www.linutronix.de/projects/Elbe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" created="2009-05-20T08:50:56" revision="6" xsi:schemaLocation="https://www.linutronix.de/projects/Elbe dbsfed.xsd">
+	<project>
+		<name>qemu_aarch64</name>
+		<version>1.0</version>
+		<description>
+			Use the following call to boot the image in qemu:
+			$ qemu-system-aarch64 \
+					-machine virt -cpu cortex-a57 -machine type=virt -nographic \
+					-smp 1 -m 1024 \
+					-netdev user,id=unet -device virtio-net-device,netdev=unet \
+					-kernel vmlinuz \
+					-append "console=ttyAMA0 root=/dev/vda2 init=/usr/lib/systemd/systemd" \
+					-drive file=sdcard.img,if=virtio
+		</description>
+		<buildtype>aarch64</buildtype>
+		<mirror>
+			<primary_host>ftp.de.debian.org</primary_host>
+			<primary_path>/debian</primary_path>
+			<primary_proto>http</primary_proto>
+			<url-list>
+				<url>
+					<binary>http://deb.debian.org/debian-security bookworm-security main</binary>
+					<source>http://deb.debian.org/debian-security bookworm-security main</source>
+				</url>
+			</url-list>
+		</mirror>
+		<suite>bookworm</suite>
+	</project>
+	<target>
+		<hostname>qemu64</hostname>
+		<domain></domain>
+		<passwd>linux</passwd>
+		<console>ttyAMA0,115200</console>
+		<!-- speed up build with debootstrap variant minbase.
+		Using minbase here and explicit install of systemd later
+		on speed up the installation process, since it reduces
+		the emulated part (run in QEMU) of the installation
+		significant.
+		-->
+		<debootstrap>
+			<variant>minbase</variant>
+		</debootstrap>
+		<package>
+			<!-- build a tarball of the target image -->
+			<tar>
+				<name>root.tgz</name>
+			</tar>
+		</package>
+		<images>
+			<msdoshd>
+				<name>sdcard.img</name>
+				<size>1500MiB</size>
+				<partition>
+						<size>50MiB</size>
+						<label>boot</label>
+						<bootable />
+				</partition>
+				<partition>
+					<size>remain</size>
+					<label>root</label>
+					<bootable />
+				</partition>
+			</msdoshd>
+		</images>
+		<fstab>
+			<bylabel>
+				<label>boot</label>
+				<mountpoint>/boot</mountpoint>
+				<fs>
+					<type>vfat</type>
+				</fs>
+			</bylabel>
+			<bylabel>
+				<label>root</label>
+				<mountpoint>/</mountpoint>
+				<fs>
+					<type>ext4</type>
+				</fs>
+			</bylabel>
+		</fstab>
+		<install-recommends />
+		<project-finetuning>
+			<losetup img="sdcard.img">
+				<!-- globs work, but must make sure, that only a single file is matched -->
+				<copy_from_partition part="1" artifact="vmlinuz">vmlinuz-*-arm64</copy_from_partition>
+				<copy_from_partition part="1" artifact="initrd.img">initrd.img-*-arm64</copy_from_partition>
+			</losetup>
+			<set_packer packer="none">sdcard.img</set_packer>
+		</project-finetuning>
+		<pkg-list>
+			<pkg>linux-image-arm64</pkg>
+			<pkg>systemd</pkg>
+			<pkg>busybox-static</pkg>
+		</pkg-list>
+	</target>
+</ns0:RootFileSystem>
