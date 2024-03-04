@@ -10,7 +10,7 @@ Setup the initvm:
 ## Build the image
 
 ```bash
-elbe initvm submit --skip-build-bin --skip-build-sources image/armhf-ti-beaglebone-black.xml
+elbe initvm submit --build-sdk image/armhf-ti-beaglebone-black.xml
 ```
 
 ## Flash the image
