@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<image schemaversion="7.4" name="qemu_aarch64_minimal">
+<image schemaversion="7.4" name="qemu_aarch64_debian">
     <description type="system">
         <author>Thomas Irgang</author>
         <contact>thomas@irgang.eu</contact>
@@ -20,15 +20,15 @@
     </users>
 
     <repository type="apt-deb" repository_gpgcheck="false" package_gpgcheck="false" imageinclude="true">
-        <source path="obs://Virtualization:Appliances:Builder/xUbuntu_22.04"/>
+        <source path="obs://Virtualization:Appliances:Builder/Debian_12"/>
     </repository>
-    <repository type="apt-deb" alias="Jammy" distribution="jammy" components="main multiverse restricted universe" repository_gpgcheck="false">
-        <source path="http://ports.ubuntu.com/ubuntu-ports"/>
+    <repository type="apt-deb" alias="bookworm" distribution="bookworm" components="main" repository_gpgcheck="false">
+        <source path="http://ftp.de.debian.org/debian"/>
     </repository>
 
     <packages type="image">
         <!-- kernel -->
-        <package name="linux-image-generic"/>
+        <package name="linux-image-arm64"/>
         <!-- system -->
         <package name="systemd"/>
         <package name="busybox-static"/>

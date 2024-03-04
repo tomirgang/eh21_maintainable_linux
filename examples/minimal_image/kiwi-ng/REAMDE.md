@@ -13,15 +13,19 @@ TODO: Fix QEMU command. Kernel isn't able to find root fs.
 ## Build the image
 
 ```bash
-time kiwi-ng --debug --target-arch=aarch64 --config=kiwi.yml \                     
+time kiwi-ng --debug --target-arch=aarch64 --config=kiwi.yml \
   system boxbuild \
   --box ubuntu --aarch64 --cpu=cortex-a57 --machine=virt --no-accel -- \
-  --description=qemu-aarch64-minimal --target-dir=build
+  --description=qemu-aarch64-debian --target-dir=build
 ```
 
 ## Run the image
 
-Extract the disk image `build/qemu_aarch64_minimal.aarch64-1.0.0-0.tar.xz`, then run QEMU:
+Extract the disk image `build/qemu_aarch64_minimal.aarch64-1.0.0-0.tar.xz`,
+
+then extract the initrd from the image `extract_initrd.sh`,
+
+then run QEMU:
 
 ```bash
 qemu-system-aarch64 \
@@ -36,9 +40,9 @@ qemu-system-aarch64 \
   	-drive if=virtio,format=raw,file=build/qemu_aarch64_minimal.aarch64-1.0.0-0/qemu_aarch64_minimal.aarch64-1.0.0
 ```
 
-## Results
+# Results
 
-- build time: 5822,46s user 147,02s system 268% cpu 37:01,00 total
+- build time:
 - startup time:
 - size:
 - runnig services:
