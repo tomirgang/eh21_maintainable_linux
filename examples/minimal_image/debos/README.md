@@ -57,8 +57,11 @@ qemu-system-aarch64 \
 
 # Evaluation
 
-- build time: 
+- build time: 383,22s user 37,62s system 109% cpu 6:25,45 total
 - startup time:
-- size:
-- runnig services:
-- installed packages:
+  - [   14.264309] systemd[1]: Started systemd-journald.service - Journal Service.
+  - [   13.869501] systemd[1]: Started systemd-journald.service - Journal Service.
+  - [   15.220740] systemd[1]: Started systemd-journald.service - Journal Service.
+- size: 615M
+- running services: 9 (`systemctl --type=service --state=running`)
+- installed packages: 116 (`dpkg -l | wc -l`)

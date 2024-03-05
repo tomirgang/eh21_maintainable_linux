@@ -35,6 +35,7 @@ qemu-system-aarch64 \
 
 - build time:
 - startup time:
+  - 
 - size:
-- runnig services:
+- running services:
 - installed packages:
