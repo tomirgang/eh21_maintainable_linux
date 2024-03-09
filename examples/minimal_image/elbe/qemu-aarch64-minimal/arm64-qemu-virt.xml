@@ -9,10 +9,10 @@
 				-cpu cortex-a72 \
 				-m 4096 \
 				-nographic \
-				-netdev user,id=mynet0,hostfwd=tcp::2222-:22 \
+				-netdev user,id=mynet0,hostfwd=tcp::5555-:22 \
 				-device virtio-net-pci,netdev=mynet0 \
 				-kernel vmlinuz \
-				-append "earlycon root=/dev/vda2" \
+				-append "earlycon root=/dev/vda1" \
 				-initrd initrd.img \
 				-drive if=virtio,format=raw,file=sdcard.img
 		</description>
@@ -21,12 +21,6 @@
 			<primary_host>ftp.de.debian.org</primary_host>
 			<primary_path>/debian</primary_path>
 			<primary_proto>http</primary_proto>
-			<url-list>
-				<url>
-					<binary>http://deb.debian.org/debian-security bookworm-security main</binary>
-					<source>http://deb.debian.org/debian-security bookworm-security main</source>
-				</url>
-			</url-list>
 		</mirror>
 		<suite>bookworm</suite>
 	</project>
@@ -49,11 +43,6 @@
 				<name>sdcard.img</name>
 				<size>2GB</size>
 				<partition>
-						<size>128MiB</size>
-						<label>boot</label>
-						<bootable />
-				</partition>
-				<partition>
 					<size>remain</size>
 					<label>root</label>
 					<bootable />
@@ -61,13 +50,6 @@
 			</msdoshd>
 		</images>
 		<fstab>
-			<bylabel>
-				<label>boot</label>
-				<mountpoint>/boot</mountpoint>
-				<fs>
-					<type>vfat</type>
-				</fs>
-			</bylabel>
 			<bylabel>
 				<label>root</label>
 				<mountpoint>/</mountpoint>
@@ -80,19 +62,24 @@
 		<project-finetuning>
 			<losetup img="sdcard.img">
 				<!-- globs work, but must make sure, that only a single file is matched -->
-				<copy_from_partition part="1" artifact="vmlinuz">vmlinuz-*-arm64</copy_from_partition>
-				<copy_from_partition part="1" artifact="initrd.img">initrd.img-*-arm64</copy_from_partition>
+				<copy_from_partition part="1" artifact="vmlinuz">/boot/vmlinuz-*-arm64</copy_from_partition>
+				<copy_from_partition part="1" artifact="initrd.img">/boot/initrd.img-*-arm64</copy_from_partition>
 			</losetup>
 			<set_packer packer="none">sdcard.img</set_packer>
 		</project-finetuning>
 		<pkg-list>
 			<pkg>linux-image-arm64</pkg>
 			<pkg>systemd</pkg>
-			<pkg>busybox-static</pkg>
+			<pkg>openssh-server</pkg>
+			<pkg>iproute2</pkg>
 		</pkg-list>
 		<finetuning>
 			<!-- Symlink systemd as init -->
 			<command>ln -s /usr/lib/systemd/systemd /sbin/init</command>
+			<!-- enable systemd-networkd -->
+			<command>systemctl enable systemd-networkd</command>
 		</finetuning>
 	</target>
+	<archivedir>overlays/networkd</archivedir>
+	<archivedir>overlays/sshd</archivedir>
 </ns0:RootFileSystem>
