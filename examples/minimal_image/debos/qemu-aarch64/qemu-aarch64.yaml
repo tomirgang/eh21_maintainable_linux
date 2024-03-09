@@ -17,22 +17,34 @@ actions:
     packages:
       - linux-image-arm64
       - systemd
-      - busybox-static
+      - openssh-server
+      - iproute2
+
+  - action: overlay
+    source: overlays/networkd
+
+  - action: overlay
+    source: overlays/sshd
 
   - action: run
     description: Add hostname
     chroot: true
     command: echo qemu64 > /etc/hostname
-  
-  - action: run
-    description: Set root password
-    chroot: true
-    script: scripts/setup-user.sh
 
   - action: run
     description: Symlink systemd as init
     chroot: true
     command: ln -s /usr/lib/systemd/systemd /sbin/init
+
+  - action: run
+    description: Enable systemd-networkd
+    chroot: true
+    command: systemctl enable systemd-networkd
+
+  - action: run
+    description: Set root password
+    chroot: true
+    script: scripts/setup-user.sh
 
   - action: image-partition
     imagename: {{ $image }}
@@ -41,19 +53,12 @@ actions:
     mountpoints:
       - mountpoint: /
         partition: root
-      - mountpoint: /boot
-        partition: boot
-        options: [ x-systemd.automount ]
     partitions:
-      - name: boot
-        fs: vfat
-        start: 0%
-        end: 128MB
-        flags: [ boot ]
       - name: root
         fs: ext4
-        start: 128MB
+        start: 0%
         end: 100%
+        flags: [ boot ]
 
   - action: filesystem-deploy
     description: Deploying filesystem onto image

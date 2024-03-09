@@ -28,10 +28,18 @@ qemu-system-aarch64 \
 	-netdev user,id=mynet0,hostfwd=tcp::2222-:22 \
 	-device virtio-net-pci,netdev=mynet0 \
 	-kernel vmlinuz-6.1.0-18-arm64 \
-	-append "earlycon root=/dev/vda2" \
+	-append "earlycon root=/dev/vda" \
   	-initrd initrd.img-6.1.0-18-arm64 \
   	-drive if=virtio,format=raw,file=qemu-aarch64.img
 ```
+
+# Evaluation
+
+- build time: 385,69s user 28,34s system 106% cpu 6:30,56 total
+- startup time: [   13.552942] systemd[1]: Started systemd-journald.service - Journal Service.
+- size: 701M
+- running processes: 64 (`ps -e | wc -l`)
+- installed packages: 143 (`dpkg -l | wc -l`)
 
 # QEMU image using grub-efi for arm64
 
@@ -54,14 +62,3 @@ qemu-system-aarch64 \
 	-drive file=qemu-aarch64.img,if=virtio  \
 	-bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd
 ```
-
-# Evaluation
-
-- build time: 383,22s user 37,62s system 109% cpu 6:25,45 total
-- startup time:
-  - [   14.264309] systemd[1]: Started systemd-journald.service - Journal Service.
-  - [   13.869501] systemd[1]: Started systemd-journald.service - Journal Service.
-  - [   15.220740] systemd[1]: Started systemd-journald.service - Journal Service.
-- size: 615M
-- running services: 9 (`systemctl --type=service --state=running`)
-- installed packages: 116 (`dpkg -l | wc -l`)
