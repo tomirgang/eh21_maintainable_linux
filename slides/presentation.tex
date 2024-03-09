@@ -21,9 +21,25 @@
     \titlepage
 \end{frame}
 
-\section{Why Linux?}
+\begin{frame}
+	\begin{block}{Topic}
+		How to build long-term secure and maintainable embedded Linux solutions
+		while spending limited effort to keep the solution secure?
+	\end{block}
+\end{frame}
+
+\section{Is Linux the right choice?}
 
 \begin{frame}{Do I need Linux for my project?}
+	\begin{block}{Rule}
+		Smaller is better!
+	\end{block}
+
+	\begin{itemize}
+		\item Less interfaces means less attack surface!
+		\item Less software means less maintenance effort!
+	\end{itemize}
+
 	\begin{tabular}{cccc}
 	&\includegraphics[width=1.9cm]{assets/Pixabay_Arduino_integrated-circuit-441289_1280.jpg} &
 	\includegraphics[width=1.9cm]{assets/ESP32.png} & 
@@ -31,13 +47,15 @@
 	&\textbf{Arduino} & \textbf{ESP32 FreeRTOS} & \textbf{SBC Linux} \\
 	real-time & + &  + & - \\
 	energy & + & o & - \\
-	UI & - & - & + \\
-	IO & - & o & + \\
-	CPU & - & o & + \\
+	communication & - & o & + \\
 	\end{tabular}
 \end{frame}
 
 \begin{frame}{What's the life-time of my project?}
+	\begin{block}{What's the life-time?}
+		Do you need to care about maintenance and updates?
+	\end{block}
+
 	\begin{columns}
     \column{0.33\textwidth}
         \centering
@@ -68,67 +86,88 @@
 
 \section{Embedded Linux}
 
+\begin{frame}{How to build an embedded Linux?}
+	\begin{block}{Topic}
+		How to build a project specific solution using embedded Linux?
+	\end{block}
+
+	\begin{itemize}
+		\item "golden image"
+		\item "from scratch"
+		\item "as a remix"
+	\end{itemize}
+\end{frame}
 
 \begin{frame}{The "golden image" approach}
+	\begin{itemize}
+		\item starting from an existing Linux image, e.g. Raspberry Pi OS,
+		\item install the required tools,
+		\item and configure it,
+		\item and freeze the image.
+	\end{itemize}
+
 	\begin{columns}
     \column{0.5\textwidth}
         \centering
         \begin{itemize}
-        		\item starting from an existing Linux image, e.g. Raspberry Pi OS,
-        		\item install additional required tools,
-        		\item and configure the tools
-        		\item and the Linux image.
-        \end{itemize}
+			\pro easy approach
+			\pro maintained by used distribution
+		\end{itemize}        
     \column{0.5\textwidth}
         \centering
         \begin{itemize}
-        		\pro easy approach
-        		\pro maintained by base distribution
         		\con solution and base distribution are mixed
-        		\con maintenance out of control
         		\con no support for variants
-        		\con huge amount of not needed software
+        		\con lots of not needed software
         \end{itemize}
     \end{columns}
 \end{frame}
 
-\begin{frame}{The source build toolkit approach}
+\begin{frame}{The "from scratch" approach}
+	\begin{itemize}
+		\item using a built toolkit, e.g. Yocto or Buildroot
+		\item which builds all packages from source
+		\item using a project specific configuration and patches
+	\end{itemize}
+
 	\begin{columns}
     \column{0.5\textwidth}
         \centering
         \begin{itemize}
-        		\item Yocto or Buildroot
-        		\item build all packages from source
-        		\item using project specific config and patches
+        	\pro optimal system
+        	\pro minimized resources
+        	\pro reusable solution
+        	\pro support for variants
         \end{itemize}
     \column{0.5\textwidth}
         \centering
         \begin{itemize}
-        		\pro optimal solution possible
-        		\pro minimized amount of resources
-        		\pro solution separated and reusable
-        		\pro support for variants
         		\con learning curve
-        		\con high maintenance effort
+        		\con maintenance effort
         \end{itemize}
     \end{columns}
 \end{frame}
 
-\begin{frame}{The remix distribution approach}
+\begin{frame}{The "remix" approach}
+	\begin{itemize}
+		\item use the packages from an existing distribution
+		\item and create a solution-specific remix
+		\item by reusing the exiting binary packages
+		\item to build a custom image with customized configuration
+	\end{itemize}
+
 	\begin{columns}
-		\column{0.5\textwidth}
-		\centering
-		\begin{itemize}
-			\item solution-specific remix of existing distribution
-			\item build a custom image using the binary packages of the base distribution
-		\end{itemize}
 		\column{0.5\textwidth}
 		\centering
 		\begin{itemize}
 			\pro low maintenance effort
-			\pro lower amount of resources
-			\pro solution separated and reusable
+			\pro smaller than "golden image"
+			\pro reusable solution
 			\pro support for variants
+		\end{itemize}
+		\column{0.5\textwidth}
+		\centering
+		\begin{itemize}
 			\con learning curve
 			\con limited optimization
 		\end{itemize}
@@ -137,24 +176,25 @@
 
 \section{The source build toolkit}
 
+\begin{frame}
+	\begin{block}{Topic}
+		How can I efficient build a customized embedded Linux distribution from scratch?
+	\end{block}
+\end{frame}
+
 \begin{frame}{Tools for source builds}
 	\begin{tabular}{c|ccc}
 		& \textbf{Yocto} & \textbf{Buildroot}  \\
 		\hline
-		target & Embedded Image & Debian remix \\ 
-		format & deb, rpm, arch & none \\
-		cross img & yes & yes \\
-		cross pkg & yes & no \\
-		compiler & yes & yes \\
+		% TODO: compare Yocto and Buildroot
 	\end{tabular}
 \end{frame}
-
-\subsection{Yocto}
 
 \begin{frame}{Yocto}
 	\begin{block}{Whats included?}
 		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution and a SDK. It also provides Poky as a reference distribution. Layer for many boards available
 	\end{block}
+
 	\begin{itemize}
 		\item Will build packages and images based on recipes and configuration
 		\item Metadata is using Bash and Python
@@ -178,12 +218,11 @@
 	\end{itemize}
 \end{frame}
 
-\subsection{Buildroot}
-
 \begin{frame}{Buildroot}
 	\begin{block}{Whats included?}
 		Generate embedded Linux systems (Rootfs, Kernel, Bootloader, SDK)  based on a "Makefile collection" and configuration for a number of boards. Simpler then Yocto(easier, but less features)
 	\end{block}
+
 	\begin{itemize}
 		\item Will build components and images from source
 		\item Style is based on Makefile and Kconfig 
@@ -208,27 +247,30 @@
 
 \section{Remixing a distribution}
 
+\begin{frame}
+	\begin{block}{Topic}
+		How can I efficient build a remix embedded Linux distribution?
+	\end{block}
+\end{frame}
+
 \begin{frame}{Tools for building a remix distribution}
 	\begin{tabular}{c|ccc}
 		& \textbf{Elbe} & \textbf{Debos} & \textbf{Kiwi-ng} \\
 		\hline
 		target & Embedded Image & Debian remix & Linux remix \\ 
 		format & deb & deb & deb, rpm, arch \\
-		cross img & yes & yes & yes \\
-		cross pkg & yes & no & no \\
-		compiler & yes & no & no \\
+		build packages & yes & no & no \\
 	\end{tabular}
 \end{frame}
 
 \subsection{Kiwi-ng}
 
 \begin{frame}{Kiwi-ng}
-	\begin{itemize}
-		\item Appliance builder
-	\end{itemize}
-	\begin{definition} 
+	\begin{block}{What's included?} 
+		Kiwi-ng is a utility to build Linux system appliances. 
 		An appliance is a ready to use image of an operating system including a pre-configured application for a specific use case. 
-	\end{definition}
+	\end{block}
+
 	\begin{itemize}
 		\item Supports all major package managers
 		\item Image description using XML and config scripts
@@ -256,12 +298,10 @@
 \subsection{Debos}
 
 \begin{frame}{Debos}
-	\begin{itemize}
-		\item Debian-based OS image builder
-	\end{itemize}
-	\begin{definition} 
+	\begin{block}{What's included?} 
 		debos is a tool to make the creation of various Debian-based OS images simpler. While most other tools focus on specific use-cases, debos is more meant as a tool-chain to make common actions trivial while providing enough rope to do whatever tweaking that might be required behind the scene.
-	\end{definition}
+	\end{block}
+	
 	\begin{itemize}
 		\item Supports only Debian packages
 		\item Image description using YAML
@@ -287,12 +327,10 @@
 \subsection{Elbe}
 
 \begin{frame}{Elbe}
-	\begin{itemize}
-		\item Debian-based embedded image builder
-	\end{itemize}
-	\begin{definition} 
-		Debian-based system to generate root filesystems for embedded devices.
-	\end{definition}
+	\begin{block}{What's included?} 
+		Elbe is a Debian-based system to generate root filesystems for embedded devices.
+	\end{block}
+
 	\begin{itemize}
 		\item Supports only Debian packages
 		\item Image description using XML
@@ -315,28 +353,44 @@
 	\end{itemize}
 \end{frame}
 
+\section{Minimal image}
+
+\begin{frame}{Which tool to use?}
+	\begin{block}{Topic}
+		What is the right tool?
+	\end{block}
+
+	\begin{itemize}
+		\item Minimal image to compare the tools:
+		\begin{itemize}
+			\item QEMU
+			\item Systemd 
+			\item OpenSSH server
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Comparison of different tools}
+	\begin{tabular}{c|ccccc}
+		& \textbf{Build} & \textbf{Startup} & \textbf{Size} & \textbf{Processes} & \textbf{Packages} \\
+		\hline
+		Yocto & X s & X s & X MB & X & X \\ 
+		Buildroot & X s & X s & X MB & X & X \\
+		\hline
+		Debos & X s & X s & X MB & X & X \\
+		Elbe & X s & X s & X MB & X & X \\
+		Kiwi-ng & X s & X s & X MB & X & X \\
+	\end{tabular}
+\end{frame}
+
+% evaluation ideas: performance, maintainability, flexibility, BSP available?
+
 \section{Example project}
-
-\subsection{Raspberry PI image}
-
-% simple RPi CLI image
 
 \subsection{Embedded project}
 
 % TOOD more involved example project
 
-\section{Evaluation}
 
-% Yocto
-
-% Raspbian
-
-% comp with kiwi
-
-% comp with debos
-
-% comp with elbe
-
-% evaluation ideas: performnace, maintainability, flexibility, BSP available?
 
 \end{document}
