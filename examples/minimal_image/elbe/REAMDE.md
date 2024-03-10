@@ -36,5 +36,6 @@ qemu-system-aarch64 \
 - build time: 20,80s user 8,97s system 6% cpu 7:19,58 total
 - startup time: [   13.143267] systemd[1]: Started systemd-journald.service - Journal Service.
 - size: 872M
+  The larger size compared to debos is caused by the apt cache and can be fixed with `rm /var/cache/apt/archives/*.deb`using finetune
 - running services: 64 (`ps -e | wc -l`)
 - installed packages: 143 (`dpkg -l | wc -l`)
