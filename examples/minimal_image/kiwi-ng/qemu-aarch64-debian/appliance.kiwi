@@ -31,7 +31,8 @@
         <package name="linux-image-arm64"/>
         <!-- system -->
         <package name="systemd"/>
-        <package name="busybox-static"/>
+        <package name="openssh-server"/>
+        <package name="iproute2"/>
     </packages>
 
     <packages type="bootstrap"/>

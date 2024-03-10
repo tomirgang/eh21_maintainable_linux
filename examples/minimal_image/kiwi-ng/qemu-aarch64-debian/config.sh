@@ -1,24 +1,7 @@
 #!/bin/bash
-#======================================
-# Functions...
-#--------------------------------------
-test -f /.kconfig && . /.kconfig
 
-set -ex
+echo qemu64 > /etc/hostname
 
-#======================================
-# Setup default target, multi-user
-#--------------------------------------
-baseSetRunlevel 3
+ln -s /usr/lib/systemd/systemd /sbin/init
 
-#==================================
-# Allow suid tools with busybox
-#----------------------------------
-chmod u+s /usr/bin/busybox
-
-#==================================
-# Create init symlink
-#----------------------------------
-pushd /usr/sbin
-ln -s ../lib/systemd/systemd init
-popd
+systemctl enable systemd-networkd
