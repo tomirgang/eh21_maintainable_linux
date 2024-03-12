@@ -1,0 +1,272 @@
+<ns0:RootFileSystem xmlns:ns0="https://www.linutronix.de/projects/Elbe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" created="2009-05-20T08:50:56" revision="6" xsi:schemaLocation="https://www.linutronix.de/projects/Elbe dbsfed.xsd">
+	<project>
+		<name>rpi4-image</name>
+		<version>1.0</version>
+		<description>
+			Rapsberry Pi 4 image
+		</description>
+		<buildtype>aarch64</buildtype>
+		<mirror>
+			<primary_host>ftp.de.debian.org</primary_host>
+			<primary_path>/debian</primary_path>
+			<primary_proto>http</primary_proto>
+			<url-list>
+				<url>
+					<binary>http://deb.debian.org/debian-security bookworm-security main</binary>
+					<source>http://deb.debian.org/debian-security bookworm-security main</source>
+				</url>
+				<url>
+					<binary>http://deb.debian.org/debian bookworm non-free-firmware</binary>
+					<source>http://deb.debian.org/debian bookworm non-free-firmware</source>
+				</url>
+				<url>
+					<binary>http://deb.debian.org/debian-security bookworm-security non-free-firmware</binary>
+					<source>http://deb.debian.org/debian-security bookworm-security non-free-firmware</source>
+				</url>
+			</url-list>
+		</mirror>
+		<suite>bookworm</suite>
+	</project>
+	<target>
+		<hostname>rpi64</hostname>
+		<domain>tomirgang.de</domain>
+		<passwd>linux</passwd>
+		<console>serial0,115200</console>
+		<!-- speed up build with debootstrap variant minbase.
+		Using minbase here and explicit install of systemd later
+		on speed up the installation process, since it reduces
+		the emulated part (run in QEMU) of the installation
+		significant.
+		-->
+		<debootstrap>
+			<variant>minbase</variant>
+		</debootstrap>
+		<!-- define an sdcard image -->
+		<images>
+			<msdoshd>
+				<name>sdcard.img</name>
+				<size>4GB</size>
+				<partition>
+					<size>128MB</size>
+					<label>firmware</label>
+				</partition>
+				<partition>
+					<size>remain</size>
+					<label>root</label>
+					<bootable/>
+				</partition>
+			</msdoshd>
+		</images>
+		<fstab>
+			<bylabel>
+				<label>firmware</label>
+				<mountpoint>/boot/firmware</mountpoint>
+				<fs>
+					<type>vfat</type>
+				</fs>
+			</bylabel>
+			<bylabel>
+				<label>root</label>
+				<mountpoint>/</mountpoint>
+				<fs>
+					<type>ext4</type>
+				</fs>
+			</bylabel>
+		</fstab>
+		<project-finetuning>
+			<set_packer packer="none">sdcard.img</set_packer>
+		</project-finetuning>
+		<install-recommends/>
+		<pkg-list>
+			<!-- kernel -->
+			<pkg>linux-image-arm64</pkg>
+			<!-- Raspberry Pi firmware -->
+			<pkg>firmware-brcm80211</pkg>
+			<pkg>raspi-firmware</pkg>
+			<!-- apt tools -->
+			<pkg>zstd</pkg>
+			<pkg>apt-utils</pkg>
+			<!-- systemd incl network and ntp -->
+			<pkg>systemd</pkg>
+			<pkg>systemd-resolved</pkg>
+			<pkg>systemd-timesyncd</pkg>
+			<!-- default tools -->
+			<pkg>util-linux</pkg>
+			<!-- shell -->
+			<pkg>bash</pkg>
+			<!-- editor -->
+			<pkg variant="debug">vim-tiny</pkg>
+			<!-- remote login -->
+			<pkg variant="debug">openssh-server</pkg>
+			<!-- qt6 dependencies -->
+			<!-- see https://wiki.qt.io/Cross-Compile_Qt_6_for_Raspberry_Pi -->
+			<pkg>libboost-all-dev</pkg>
+			<pkg>libudev-dev</pkg>
+			<pkg>libinput-dev</pkg>
+			<pkg>libts-dev</pkg>
+			<pkg>libmtdev-dev</pkg>
+			<pkg>libjpeg-dev</pkg>
+			<pkg>libfontconfig1-dev</pkg>
+			<pkg>libssl-dev</pkg>
+			<pkg>libdbus-1-dev</pkg>
+			<pkg>libglib2.0-dev</pkg>
+			<pkg>libxkbcommon-dev</pkg>
+			<pkg>libegl1-mesa-dev</pkg>
+			<pkg>libgbm-dev</pkg>
+			<pkg>libgles2-mesa-dev</pkg>
+			<pkg>mesa-common-dev</pkg>
+			<pkg>libasound2-dev</pkg>
+			<pkg>libpulse-dev</pkg>
+			<pkg>libgstreamer1.0-dev</pkg>
+			<pkg>libgstreamer-plugins-base1.0-dev</pkg>
+			<pkg>gstreamer1.0-alsa</pkg>
+			<pkg>libvpx-dev</pkg>
+			<pkg>libsrtp2-dev</pkg>
+			<pkg>libsnappy-dev</pkg>
+			<pkg>libnss3-dev</pkg>
+			<pkg>flex</pkg>
+			<pkg>bison</pkg>
+			<pkg>ruby</pkg>
+			<pkg>gperf</pkg>
+			<pkg>libbz2-dev</pkg>
+			<pkg>libcups2-dev</pkg>
+			<pkg>libatkmm-1.6-dev</pkg>
+			<pkg>libxi6</pkg>
+			<pkg>libxcomposite1</pkg>
+			<pkg>libfreetype6-dev</pkg>
+			<pkg>libicu-dev</pkg>
+			<pkg>libsqlite3-dev</pkg>
+			<pkg>libxslt1-dev</pkg>
+			<pkg>libavcodec-dev</pkg>
+			<pkg>libavformat-dev</pkg>
+			<pkg>libswscale-dev</pkg>
+			<pkg>libx11-dev</pkg>
+			<pkg>freetds-dev</pkg>
+			<pkg>libpq-dev</pkg>
+			<pkg>libiodbc2-dev</pkg>
+			<pkg>firebird-dev</pkg>
+			<pkg>libxext-dev</pkg>
+			<pkg>libxcb1</pkg>
+			<pkg>libxcb1-dev</pkg>
+			<pkg>libx11-xcb1</pkg>
+			<pkg>libx11-xcb-dev</pkg>
+			<pkg>libxcb-keysyms1</pkg>
+			<pkg>libxcb-keysyms1-dev</pkg>
+			<pkg>libxcb-image0</pkg>
+			<pkg>libxcb-image0-dev</pkg>
+			<pkg>libxcb-shm0</pkg>
+			<pkg>libxcb-shm0-dev</pkg>
+			<pkg>libxcb-icccm4</pkg>
+			<pkg>libxcb-icccm4-dev</pkg>
+			<pkg>libxcb-sync1</pkg>
+			<pkg>libxcb-sync-dev</pkg>
+			<pkg>libxcb-render-util0</pkg>
+			<pkg>libxcb-render-util0-dev</pkg>
+			<pkg>libxcb-xfixes0-dev</pkg>
+			<pkg>libxrender-dev</pkg>
+			<pkg>libxcb-shape0-dev</pkg>
+			<pkg>libxcb-randr0-dev</pkg>
+			<pkg>libxcb-glx0-dev</pkg>
+			<pkg>libxi-dev</pkg>
+			<pkg>libdrm-dev</pkg>
+			<pkg>libxcb-xinerama0</pkg>
+			<pkg>libxcb-xinerama0-dev</pkg>
+			<pkg>libatspi2.0-dev</pkg>
+			<pkg>libxcursor-dev</pkg>
+			<pkg>libxcomposite-dev</pkg>
+			<pkg>libxdamage-dev</pkg>
+			<pkg>libxss-dev</pkg>
+			<pkg>libxtst-dev</pkg>
+			<pkg>libpci-dev</pkg>
+			<pkg>libcap-dev</pkg>
+			<pkg>libxrandr-dev</pkg>
+			<pkg>libdirectfb-dev</pkg>
+			<pkg>libaudio-dev</pkg>
+			<pkg>libxkbcommon-x11-dev</pkg>
+			<pkg>libxcb-composite0</pkg>
+			<pkg>libxcb-composite0-dev</pkg>
+			<pkg>libxcb-cursor-dev</pkg>
+			<pkg>libxcb-cursor0</pkg>
+			<pkg>libxcb-damage0</pkg>
+			<pkg>libxcb-damage0-dev</pkg>
+			<pkg>libxcb-doc</pkg>
+			<pkg>libxcb-dpms0</pkg>
+			<pkg>libxcb-dpms0-dev</pkg>
+			<pkg>libxcb-dri2-0</pkg>
+			<pkg>libxcb-dri2-0-dev</pkg>
+			<pkg>libxcb-dri3-0</pkg>
+			<pkg>libxcb-dri3-dev</pkg>
+			<pkg>libxcb-ewmh-dev</pkg>
+			<pkg>libxcb-ewmh2</pkg>
+			<pkg>libxcb-glx0</pkg>
+			<pkg>libxcb-glx0-dev</pkg>
+			<pkg>libxcb-icccm4</pkg>
+			<pkg>libxcb-icccm4-dev</pkg>
+			<pkg>libxcb-image0</pkg>
+			<pkg>libxcb-image0-dev</pkg>
+			<pkg>libxcb-imdkit-dev</pkg>
+			<pkg>libxcb-imdkit1</pkg>
+			<pkg>libxcb-keysyms1</pkg>
+			<pkg>libxcb-keysyms1-dev</pkg>
+			<pkg>libxcb-present-dev</pkg>
+			<pkg>libxcb-present0</pkg>
+			<pkg>libxcb-randr0</pkg>
+			<pkg>libxcb-randr0-dev</pkg>
+			<pkg>libxcb-record0</pkg>
+			<pkg>libxcb-record0-dev</pkg>
+			<pkg>libxcb-render-util0</pkg>
+			<pkg>libxcb-render-util0-dev</pkg>
+			<pkg>libxcb-render0</pkg>
+			<pkg>libxcb-render0-dev</pkg>
+			<pkg>libxcb-res0</pkg>
+			<pkg>libxcb-res0-dev</pkg>
+			<pkg>libxcb-screensaver0</pkg>
+			<pkg>libxcb-screensaver0-dev</pkg>
+			<pkg>libxcb-shape0</pkg>
+			<pkg>libxcb-shape0-dev</pkg>
+			<pkg>libxcb-shm0</pkg>
+			<pkg>libxcb-shm0-dev</pkg>
+			<pkg>libxcb-sync-dev</pkg>
+			<pkg>libxcb-sync1</pkg>
+			<pkg>libxcb-util-dev</pkg>
+			<pkg>libxcb-util0-dev</pkg>
+			<pkg>libxcb-util1</pkg>
+			<pkg>libxcb-xf86dri0</pkg>
+			<pkg>libxcb-xf86dri0-dev</pkg>
+			<pkg>libxcb-xfixes0</pkg>
+			<pkg>libxcb-xfixes0-dev</pkg>
+			<pkg>libxcb-xinerama0</pkg>
+			<pkg>libxcb-xinerama0-dev</pkg>
+			<pkg>libxcb-xinput-dev</pkg>
+			<pkg>libxcb-xinput0</pkg>
+			<pkg>libxcb-xkb-dev</pkg>
+			<pkg>libxcb-xkb1</pkg>
+			<pkg>libxcb-xrm-dev</pkg>
+			<pkg>libxcb-xrm0</pkg>
+			<pkg>libxcb-xtest0</pkg>
+			<pkg>libxcb-xtest0-dev</pkg>
+			<pkg>libxcb-xv0</pkg>
+			<pkg>libxcb-xv0-dev</pkg>
+			<pkg>libxcb-xvmc0</pkg>
+			<pkg>libxcb-xvmc0-dev</pkg>
+			<pkg>libxcb1</pkg>
+			<pkg>libxcb1-dev</pkg>
+		</pkg-list>
+		<finetuning>
+			<!-- config raspi firmware -->
+			<command>echo 'ROOTPART="LABEL=root"' &gt;&gt; /etc/default/raspi-firmware</command>
+			<command>echo 'KERNEL_ARCH="arm64"' &gt;&gt; /etc/default/raspi-firmware</command>
+			<command>echo 'init=/usr/lib/systemd/systemd' &gt;&gt; /etc/default/raspi-extra-cmdline</command>
+			<!-- regenerate config files -->
+			<!-- <command>update-initramfs -u -k all</command> -->
+			<!-- enable systemd services -->
+			<!-- network management -->
+			<command>systemctl enable systemd-networkd</command>
+			<!-- DNS resolving -->
+			<command>systemctl enable systemd-resolved</command>
+			<!-- NTP client -->
+			<command>systemctl enable systemd-timesyncd</command>
+		</finetuning>
+	</target>
+	<archivedir>overlays/networkd</archivedir>
+</ns0:RootFileSystem>

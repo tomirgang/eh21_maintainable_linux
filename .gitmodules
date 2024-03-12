@@ -1,0 +1,3 @@
+[submodule "examples/elbe_advanced/qt6/qt5"]
+	path = examples/elbe_advanced/qt6/qt5
+	url = https://github.com/qt/qt5.git

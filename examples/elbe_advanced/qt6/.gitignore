@@ -1,0 +1,6 @@
+qt-host/**/*
+qt-hostbuild/**/*
+qt-raspi/**/*
+qt-raspibuild/**/*
+!**/.gitignore
+!**/.gitkeep
