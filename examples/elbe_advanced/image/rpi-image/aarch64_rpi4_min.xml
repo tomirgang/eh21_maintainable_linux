@@ -96,6 +96,7 @@
 			<pkg>bash</pkg>
 			<!-- qt6 app dependencies -->
 			<pkg>qt6-declarative-dev</pkg>
+			<pkg>libgles-dev</pkg>
 			<pkg>libqt6gui6</pkg>
 			<pkg>libqt6core6</pkg>
 			<pkg>libstdc++6</pkg>

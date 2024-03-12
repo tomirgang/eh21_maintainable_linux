@@ -56,11 +56,23 @@ cmake --install .
 
 # Build app
 
+- Change to demo app folder: `examples/elbe_advanced/qt6/qt5/qtdoc/examples/demos/coffee`
+- Ensure that it's not a symlinked folder: `cd $(realpath ${PWD})`
+- Prepare build: `./../../../../../qt-raspi/bin/qt-cmake CMakeLists.txt`
+- Build app: `cmake --build . --parallel 4`
 
-libQt6Qml.so -> qt6-declarative-dev
-libQt6Gui.so.6 -> libqt6gui6
-libQt6Core.so.6 -> 	libqt6core6
-libstdc++.so.6 -> libstdc++6
-libgcc_s.so.1 -> libgcc-s1
-libc.so.6 -> libc6
+This will generate a binary `coffeemachine` in `examples/elbe_advanced/qt6/qt5/qtdoc/examples/demos/coffee`
+
+# Test the app
+
+- Mount the SD card and change to the root folder.
+- Create the QT6 library folder: `sudo mkdir -p /usr/local/qt6`
+- Copy the content of `examples/elbe_advanced/qt6/qt-raspi` to `usr/local/qt6` in the mounted Raspberry Pi root filesystem.
+- Copy the app binary to the Raspberry Pi root filesystem.
+
+Unmount the SD card and boot it in the Pi. Then:
+
+- Add QT library path: `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/qt6/lib/`
+- Run the app: `./coffeemachine -platform eglfs`
+
 
