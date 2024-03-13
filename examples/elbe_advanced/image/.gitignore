@@ -5,3 +5,4 @@ elbe-build*/**/*
 project
 *.deb
 elbe-repodir-*.xml
+pbuilder_*

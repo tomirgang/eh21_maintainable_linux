@@ -1,0 +1,19 @@
+Source: coffee
+Section: unknown
+Priority: optional
+Maintainer: Thomas Irgang <thomas@irgang.eu>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+Standards-Version: 4.6.2
+Homepage: https://github.com/tomirgang/eh21_maintainable_linux
+Vcs-Browser: https://github.com/tomirgang/eh21_maintainable_linux
+Vcs-Git: https://github.com/tomirgang/eh21_maintainable_linux.git
+
+Package: coffee
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: QT6 coffee demo app
