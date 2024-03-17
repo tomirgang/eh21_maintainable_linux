@@ -7,21 +7,21 @@
 		</description>
 		<buildtype>aarch64</buildtype>
 		<mirror>
-			<primary_host>deb.debian.org</primary_host>
+			<primary_host>ftp.de.debian.org</primary_host>
 			<primary_path>/debian</primary_path>
 			<primary_proto>http</primary_proto>
 			<url-list>
 				<url>
-					<binary>http://deb.debian.org/debian-security bookworm-security main</binary>
-					<source>http://deb.debian.org/debian-security bookworm-security main</source>
+					<binary>http://ftp.de.debian.org/debian-security bookworm-security main</binary>
+					<source>http://ftp.de.debian.org/debian-security bookworm-security main</source>
 				</url>
 				<url>
-					<binary>http://deb.debian.org/debian bookworm non-free-firmware</binary>
-					<source>http://deb.debian.org/debian bookworm non-free-firmware</source>
+					<binary>http://ftp.de.debian.org/debian bookworm non-free-firmware</binary>
+					<source>http://ftp.de.debian.org/debian bookworm non-free-firmware</source>
 				</url>
 				<url>
-					<binary>http://deb.debian.org/debian-security bookworm-security non-free-firmware</binary>
-					<source>http://deb.debian.org/debian-security bookworm-security non-free-firmware</source>
+					<binary>http://ftp.de.debian.org/debian-security bookworm-security non-free-firmware</binary>
+					<source>http://ftp.de.debian.org/debian-security bookworm-security non-free-firmware</source>
 				</url>
 			</url-list>
 		</mirror>
@@ -83,9 +83,6 @@
 			<!-- Raspberry Pi firmware -->
 			<pkg>firmware-brcm80211</pkg>
 			<pkg>raspi-firmware</pkg>
-			<!-- apt tools -->
-			<pkg>zstd</pkg>
-			<pkg>apt-utils</pkg>
 			<!-- systemd incl network and ntp -->
 			<pkg>systemd</pkg>
 			<pkg>systemd-resolved</pkg>
@@ -94,22 +91,12 @@
 			<pkg>util-linux</pkg>
 			<!-- shell -->
 			<pkg>bash</pkg>
-			<!-- qt6 app dependencies -->
-			<pkg>qt6-declarative-dev</pkg>
-			<pkg>libgles-dev</pkg>
-			<pkg>libqt6gui6</pkg>
-			<pkg>libqt6core6</pkg>
-			<pkg>libstdc++6</pkg>
-			<pkg>libgcc-s1</pkg>
-			<pkg>libc6</pkg>
 			<!-- for debuggung -->
-			<pkg variant="debug">bash</pkg>
 			<pkg variant="debug">vim</pkg>
 			<pkg variant="debug">iproute2</pkg>
 			<pkg variant="debug">iputils-ping</pkg>
-			<!-- for app building -->
-			<pkg variant="sdk">qt6-base-dev</pkg>
-			<pkg variant="sdk">qt6-base-dev-tools</pkg>
+			<!-- app -->
+			<pkg variant="app">coffee</pkg>
 		</pkg-list>
 		<finetuning>
 			<!-- config raspi firmware -->

@@ -6,3 +6,11 @@
 *.snm
 *.toc
 *.synctex.gz
+
+examples/elbe_advanced/coffee_6.4.2*
+examples/elbe_advanced/build/**/*
+examples/elbe_advanced/build
+
+**/*.prj
+**/preprocess.xml
+**/log.txt
