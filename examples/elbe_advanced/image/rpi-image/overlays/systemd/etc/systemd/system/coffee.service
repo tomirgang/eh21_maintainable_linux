@@ -2,7 +2,7 @@
 Description=Coffee service
 
 [Service]
-ExecStart=/usr/examples/coffee
+ExecStart=/usr/examples/coffee -platform linuxfb
 
 [Install]
 WantedBy=multi-user.target

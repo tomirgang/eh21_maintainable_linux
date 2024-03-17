@@ -3,3 +3,6 @@ sdk
 
 coffee-build-*/**/*
 coffee-build-*
+
+build-coffee-*/**/*
+build-coffee-*

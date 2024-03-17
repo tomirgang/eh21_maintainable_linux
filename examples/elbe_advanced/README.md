@@ -155,6 +155,15 @@ For building the QT6 coffee example app, we need to add the following additional
 - qt6-base-dev
 - qt6-declarative-dev
 
+We also need to app the dynamic loaded app dependencies. The coffee app relies on:
+
+- qml6-module-qtquick
+- qml6-module-qtquick-controls
+- qml6-module-qtquick-layouts
+- qml6-module-qtquick-templates
+- qml6-module-qtquick-window
+- qml6-module-qtqml-workerscript
+
 Now we can build the package by running `pdebuild` in folder `examples/elbe_advanced/coffee-6.4.2`.
 This will build package for the host CPU architecture.
 The build results are stored in `/var/cache/pbuilder/result`.
@@ -191,8 +200,12 @@ export PRJ=$(cat my.prj)
 elbe preprocess --variant app rpi-image/aarch64_rpi4.xml
 # upload the XML to the initvm project
 elbe control set_xml $PRJ preprocess.xml
-# upload our coffee Debian package to the inibvm
+# upload our binary coffee Debian package to the initvm
 elbe prjrepo upload_pkg $PRJ /var/cache/pbuilder/result/coffee_6.4.2_arm64.deb
+# upload our source coffee Debian package to the initvm (for sources ISO)
+cd ..
+elbe prjrepo upload_pkg $PRJ /var/cache/pbuilder/result/coffee_6.4.2.dsc
+cd image
 # list all available packages for this project - not needed, just for info
 elbe prjrepo list_packages $PRJ
 # trigger rebuild - this will run a background build
@@ -248,4 +261,15 @@ We can also test the image on hardware.
 
 # Auto-start the app
 
-TODO: Systemd unit file 
+We can run the app using systemd, by creating a simple unit file and mark the serivce for autostart.
+
+The unit file is added as an overlay. See `examples/elbe_advanced/image/rpi-image/overlays/systemd`.
+
+Alternative, we could have added the service file to the coffee package.
+
+The service is enabled in the image description using a finetune command:
+
+```xml
+			<!-- auto-start coffee app -->
+			<command variant="app">systemctl enable coffee</command>
+```
