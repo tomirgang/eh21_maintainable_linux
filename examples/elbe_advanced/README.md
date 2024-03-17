@@ -21,6 +21,13 @@ In folder `examples/elbe_advanced/image`:
 
 ### Build QT6 host tools
 
+Source the SDK environment: 
+In folder `examples/elbe_advanced/sdk`:
+
+```bash
+source environment-setup-elbe-aarch64-linux-gnu-rpi4-image-1.0
+```
+
 In folder `examples/elbe_advanced/qt6/qt-hostbuild`:
 
 ```bash
@@ -272,4 +279,7 @@ The service is enabled in the image description using a finetune command:
 ```xml
 			<!-- auto-start coffee app -->
 			<command variant="app">systemctl enable coffee</command>
+            <!-- and disable getty on screen -->
+			<command variant="app">systemctl mask getty@tty1</command>
+			<command variant="app">systemctl disable getty@tty1</command>
 ```

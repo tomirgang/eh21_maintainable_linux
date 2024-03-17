@@ -31,15 +31,19 @@
 \section{Is Linux the right choice?}
 
 \begin{frame}{Do I need Linux for my project?}
+	Before we begin:
+
 	\begin{block}{Rule}
 		Smaller is better!
 	\end{block}
-
+	
 	\begin{itemize}
 		\item Less interfaces means less attack surface!
 		\item Less software means less maintenance effort!
 	\end{itemize}
+\end{frame}
 
+\begin{frame}{Do I need Linux for my project?}
 	\begin{tabular}{cccc}
 	&\includegraphics[width=1.9cm]{assets/Pixabay_Arduino_integrated-circuit-441289_1280.jpg} &
 	\includegraphics[width=1.9cm]{assets/ESP32.png} & 
@@ -53,10 +57,12 @@
 
 \begin{frame}{What's the life-time of my project?}
 	\begin{block}{What's the life-time?}
-		Do you need to care about maintenance and updates?
+		Do I need to care about maintenance and updates?
 	\end{block}
+\end{frame}
 
-	\begin{columns}
+\begin{frame}{What's the life-time of my project?}
+	\begin{columns}[t]
     \column{0.33\textwidth}
         \centering
         \textbf{Experiment}
@@ -78,24 +84,18 @@
         \textbf{Home Automation}
         \begin{itemize}
         		\item more than 15 years
-        		\item maintenance and upgrades
-        		\item reusability for mid-term upgrade needed
+        		\item \emph{maintenance and upgrades}
+        		\item \emph{reusability for mid-term upgrade needed}
         \end{itemize}
     \end{columns}
 \end{frame}
 
 \section{Embedded Linux}
 
-\begin{frame}{How to build an embedded Linux?}
+\begin{frame}{How to build an embedded Linux distribution?}
 	\begin{block}{Topic}
-		How to build a project specific solution using embedded Linux?
+		How to build a project specific embedded Linux distribution?
 	\end{block}
-
-	\begin{itemize}
-		\item "golden image"
-		\item "from scratch"
-		\item "as a remix"
-	\end{itemize}
 \end{frame}
 
 \begin{frame}{The "golden image" approach}
@@ -106,7 +106,7 @@
 		\item and freeze the image.
 	\end{itemize}
 
-	\begin{columns}
+	\begin{columns}[t]
     \column{0.5\textwidth}
         \centering
         \begin{itemize}
@@ -130,7 +130,7 @@
 		\item using a project specific configuration and patches
 	\end{itemize}
 
-	\begin{columns}
+	\begin{columns}[t]
     \column{0.5\textwidth}
         \centering
         \begin{itemize}
@@ -156,7 +156,7 @@
 		\item to build a custom image with customized configuration
 	\end{itemize}
 
-	\begin{columns}
+	\begin{columns}[t]
 		\column{0.5\textwidth}
 		\centering
 		\begin{itemize}
@@ -186,10 +186,6 @@
 	\begin{tabular}{c|ccc}
 		& \textbf{Yocto} & \textbf{Buildroot}  \\
 		\hline
-begin{frame}{Tools for source builds}
-	\begin{tabular}{c|ccc}
-		& \textbf{Yocto} & \textbf{Buildroot}  \\
-		\hline
 		target & Embedded  & Embedded \\ 
 		format & deb, rpm, arch & none \\
 		cross toolchain & yes & yes \\
@@ -201,56 +197,27 @@ begin{frame}{Tools for source builds}
 
 \begin{frame}{Yocto}
 	\begin{block}{Whats included?}
-		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution and a SDK. It also provides Poky as a reference distribution. Layer for many boards available
+		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution and a SDK. It also provides Poky as a reference distribution. Layer for many boards are available.
 	\end{block}
 
 	\begin{itemize}
-		\item Will build packages and images based on recipes and configuration
+		\item Builds packages and images based on recipes and configuration
 		\item Metadata is using Bash and Python
-		\item Docs: \url{https://docs.yoctoproject.org/}
+		\item Docs: \href{https://docs.yoctoproject.org/}{docs.yoctoproject.org}
 		\item Source: \url{git://git.yoctoproject.org/poky}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Yocto: Raspberry Pi image}
-	\begin{itemize}
-		\item Source: \href{https://git.yoctoproject.org/poky}{poky}, \href{https://git.yoctoproject.org/meta-raspberrypi/}{bsp}
-		\item based on Poky
-		\item Steps:
-		\begin{itemize}
-			\item install kas: pip3 install kas
-			\item get kas.yml
-			\item run kas build
-			\item copy image to SD card
-		\end{itemize}
-		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/yocto}{Github}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Buildroot}
 	\begin{block}{Whats included?}
-		Generate embedded Linux systems (Rootfs, Kernel, Bootloader, SDK)  based on a "Makefile collection" and configuration for a number of boards. Simpler then Yocto(easier, but less features)
+		Generate embedded Linux systems (Rootfs, Kernel, Bootloader, SDK)  based on a "Makefile collection" and configuration for a number of boards. Simpler then Yocto (easier, but less features)
 	\end{block}
 
 	\begin{itemize}
-		\item Will build components and images from source
+		\item Build components and images from source
 		\item Style is based on Makefile and Kconfig 
-		\item Docs: \url{https://buildroot.org/downloads/manual/manual.html}
-		\item Source: \url{https://gitlab.com/buildroot.org/buildroot/}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Buildroot: Raspberry Pi image}
-	\begin{itemize}
-		\item Source: \href{https://gitlab.com/buildroot.org/buildroot/}{GitLab}
-		\item Steps:
-		\begin{itemize}
-			\item install \href{https://buildroot.org/downloads/manual/manual.html\#requirement}{dependencies}
-			\item make raspberrypi4\_64\_defconfig
-			\item make
-			\item copy image to SD card
-		\end{itemize}
-		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/buildroot}{Github}
+		\item Docs: \href{https://buildroot.org/downloads/manual/manual.html}{buildroot.org/downloads/manual/manual.html}
+		\item Source: \href{https://gitlab.com/buildroot.org/buildroot/}{gitlab.com/buildroot.org/buildroot/}
 	\end{itemize}
 \end{frame}
 
@@ -268,7 +235,8 @@ begin{frame}{Tools for source builds}
 		\hline
 		target & Embedded Image & Debian remix & Linux remix \\ 
 		format & deb & deb & deb, rpm, arch \\
-		build packages & yes & no & no \\
+		cross toolchain & yes & no & no \\
+		flexibility & mid & mid & low \\
 	\end{tabular}
 \end{frame}
 
@@ -288,22 +256,6 @@ begin{frame}{Tools for source builds}
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Kiwi-ng: Raspberry Pi image}
-	\begin{itemize}
-		\item Source: \href{https://github.com/OSInside/kiwi-descriptions/tree/main/ubuntu/aarch64/ubuntu-jammy-rpi}{Github}
-		\item based on Ubuntu Jammy
-		\item Steps:
-		\begin{itemize}
-			\item install \url{https://pypi.org/project/kiwi/}
-			\item install \url{https://pypi.org/project/kiwi-boxed-plugin/}
-			\item get image description
-			\item run image build
-			\item copy image to SD card
-		\end{itemize}
-		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/kiwi-ng}{Github}
-	\end{itemize}
-\end{frame}
-
 \subsection{Debos}
 
 \begin{frame}{Debos}
@@ -316,20 +268,6 @@ begin{frame}{Tools for source builds}
 		\item Image description using YAML
 		\item Docs: \url{https://pkg.go.dev/github.com/go-debos/debos}
 		\item Source: \url{https://github.com/go-debos/debos}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Debos: Raspberry Pi image}
-	\begin{itemize}
-		\item Source: \href{https://github.com/go-debos/debos-recipes/tree/main/rpi64}{Github}
-		\item based on Debian Bullseye
-		\item Steps:
-		\begin{itemize}
-			\item Debian: install debos packages
-			\item run image build
-			\item copy image to SD card
-		\end{itemize}
-		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/debos}{Github}
 	\end{itemize}
 \end{frame}
 
@@ -348,33 +286,21 @@ begin{frame}{Tools for source builds}
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Elbe: Raspberry Pi image}
-	\begin{itemize}
-		\item Based on \href{https://github.com/Linutronix/elbe/blob/master/examples/arm64-qemu-virt.xml}{example arm64-qemu-virt}
-		\item Steps:
-		\begin{itemize}
-			\item Debian: install elbe package
-			\item prepare the initvm
-			\item run the image build
-			\item copy image to SD card
-		\end{itemize}
-		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/elbe}{Github}
-	\end{itemize}
-\end{frame}
-
 \section{Minimal image}
 
-\begin{frame}{Which tool to use?}
+\begin{frame}{Which tool should I use?}
 	\begin{block}{Topic}
-		What is the right tool?
+		What is the right tool for my project?
 	\end{block}
+\end{frame}
 
+\begin{frame}{Which tool should I use?}
 	\begin{itemize}
 		\item Minimal image to compare the tools:
 		\begin{itemize}
-			\item QEMU
-			\item Systemd 
-			\item OpenSSH server
+			\item QEMU target
+			\item Systemd as init manager
+			\item OpenSSH server as service
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -394,14 +320,201 @@ begin{frame}{Tools for source builds}
 	\end{tabular}
 \end{frame}
 
-% evaluation ideas: performance, maintainability, flexibility, BSP available?
-
 \section{Example project}
 
-\subsection{Embedded project}
+\begin{frame}{The coffee machine}
+	The example project:
+	\begin{itemize}
+		\item Raspberry Pi 4 as target platform
+		\item Systemd as init manager
+		\item QT6 coffee demo as example application
+		\item Requirements:
+		\begin{itemize}
+			\item The app shall start automatically in fullscreen mode
+			\item The app shall own the graphics device (no window manager)
+			\item The image shall only contain the minimal necessary dependencies (minimize maintenance and attack surface)
+			\item For development, login with SSH shall be supported.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
 
-% TOOD more involved example project
+\begin{frame}{The coffee machine}
+	\begin{tabular}{cc}
+		\href{https://github.com/qt/qtdoc/tree/v6.4.2/examples/demos/coffee}{QT 6.4.2} &
+		\href{https://github.com/qt/qtdoc/tree/v6.6.2/examples/demos/coffee}{QT 6.6.2} \\
+		\includegraphics[width=5cm]{assets/coffee_machine_qt_6-4-2.png} &
+		\includegraphics[width=2.5cm]{assets/coffee_machine_qt_6-6-2.png} \\
+	\end{tabular}
+\end{frame}
 
+\subsection{Coffee machine with Yocto}
+
+\begin{frame}{How to realize this project with Yocto?}
+	\begin{block}{How to do?}
+		How to implement the coffee machine project with Yocto?
+	\end{block}
+\end{frame}
+
+\subsection{Coffee machine with Elbe}
+
+\begin{frame}{How to realize this project with Elbe?}
+	\begin{block}{How to do?}
+		How to implement the coffee machine project with Elbe?
+	\end{block}
+\end{frame}
+
+\begin{frame}{How to realize this project with Elbe?}
+	\begin{block}{Using the Debian Bookworm QT packages}
+		How to implement the coffee machine project with Elbe using the QT 6.4.2 packages provided by Debian Bookworm?
+	\end{block}
+
+	You can find the code for this example on
+	\href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/elbe_advanced}{Github}.
+\end{frame}
+
+
+\begin{frame}{Step 1: Ensure we can build the app}
+	First we should make sure we can build the app:
+	\begin{itemize}
+		\item Install the needed build dependencies:\\
+			\emph{sudo apt install qt6-base-dev qt6-declarative-dev}
+		\item Get the source code of the example app
+		\item Create a build folder and build the app:
+		\begin{itemize}
+			\item cmake \emph{<path to>/coffee}
+			\item make
+		\end{itemize}
+	\end{itemize}
+	This should give you a \emph{coffee} binary which you can run.
+\end{frame}
+
+\begin{frame}{Step 2: Package the app - Debian metadata}
+	Next we should create a Debian package for our app.\\
+	To do this, we need to generate Debian metadata for the app:
+	\begin{itemize}
+		\item Install the needed tools:\\
+		\emph{sudo apt install dh-make pbuilder debootstrap devscripts}
+		\item Set the needed Debian maintainer environment variables:
+		\begin{itemize}
+			\item \emph{export DEBFULLNAME="Thomas Irgang"}
+			\item \emph{export DEBEMAIL="thomas@irgang.eu"}
+		\end{itemize}
+		\item Rename the app folder using the pattern: \emph{app name}-\emph{app version}
+		\item Generate the Debian metadata:
+		\begin{itemize}
+			\item Inside the app folder, run:
+			\item \emph{dh\_make -n -s --yes}
+		\end{itemize}
+	\end{itemize}
+	This will generate a \emph{debian} sub-folder containing lot's of prepared package metadata.
+\end{frame}
+
+\begin{frame}{Step 3: Package the app - fine-tune metadata}
+\end{frame}
+
+\begin{frame}{Step 4: Package the app - configure pbuilder}
+\end{frame}
+
+\begin{frame}{Step 5: Package the app - build the package}
+\end{frame}
+
+\begin{frame}{Step 5: Package the app - build the package}
+\end{frame}
+
+\begin{frame}{Step 6: Install the app}
+\end{frame}
+
+\begin{frame}{Step 7: Auto-start the app}
+\end{frame}
+
+\begin{frame}{How to realize this project with Elbe?}
+	\begin{block}{Using the latest QT version}
+		How to implement the coffee machine project with Elbe using the latest QT version?
+	\end{block}
+
+	\begin{block}{Warning}
+		This approach has the drawback that you have to maintain your QT version!
+	\end{block}
+\end{frame}
+
+\section{How to build a Raspberry Pi image?}
+
+
+\begin{frame}{Yocto: Raspberry Pi image}
+	\begin{itemize}
+		\item Source: \href{https://git.yoctoproject.org/poky}{poky}, \href{https://git.yoctoproject.org/meta-raspberrypi/}{bsp}
+		\item based on Poky
+		\item Steps:
+		\begin{itemize}
+			\item install kas: pip3 install kas
+			\item get kas.yml
+			\item run kas build
+			\item copy image to SD card
+		\end{itemize}
+		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/yocto}{Github}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Buildroot: Raspberry Pi image}
+	\begin{itemize}
+		\item Source: \href{https://gitlab.com/buildroot.org/buildroot/}{GitLab}
+		\item Steps:
+		\begin{itemize}
+			\item install \href{https://buildroot.org/downloads/manual/manual.html\#requirement}{dependencies}
+			\item make raspberrypi4\_64\_defconfig
+			\item make
+			\item copy image to SD card
+		\end{itemize}
+		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/buildroot}{Github}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Kiwi-ng: Raspberry Pi image}
+	\begin{itemize}
+		\item Source: \href{https://github.com/OSInside/kiwi-descriptions/tree/main/ubuntu/aarch64/ubuntu-jammy-rpi}{Github}
+		\item based on Ubuntu Jammy
+		\item Steps:
+		\begin{itemize}
+			\item install \url{https://pypi.org/project/kiwi/}
+			\item install \url{https://pypi.org/project/kiwi-boxed-plugin/}
+			\item get image description
+			\item run image build
+			\item copy image to SD card
+		\end{itemize}
+		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/kiwi-ng}{Github}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Debos: Raspberry Pi image}
+	\begin{itemize}
+		\item Source: \href{https://github.com/go-debos/debos-recipes/tree/main/rpi64}{Github}
+		\item based on Debian Bullseye
+		\item Steps:
+		\begin{itemize}
+			\item Debian: install debos packages
+			\item run image build
+			\item copy image to SD card
+		\end{itemize}
+		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/debos}{Github}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Elbe: Raspberry Pi image}
+	\begin{itemize}
+		\item Based on \href{https://github.com/Linutronix/elbe/blob/master/examples/arm64-qemu-virt.xml}{example arm64-qemu-virt}
+		\item Steps:
+		\begin{itemize}
+			\item Debian: install elbe package
+			\item prepare the initvm
+			\item run the image build
+			\item copy image to SD card
+		\end{itemize}
+		\item more details on \href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/first_build_rpi4/elbe}{Github}
+	\end{itemize}
+\end{frame}
 
 
 \end{document}
