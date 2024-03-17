@@ -1,0 +1,8 @@
+[Unit]
+Description=Coffee service
+
+[Service]
+ExecStart=/usr/examples/coffee
+
+[Install]
+WantedBy=multi-user.target

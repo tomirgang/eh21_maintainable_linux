@@ -91,12 +91,170 @@
 			<pkg>util-linux</pkg>
 			<!-- shell -->
 			<pkg>bash</pkg>
-			<!-- for debuggung -->
-			<pkg variant="debug">vim</pkg>
-			<pkg variant="debug">iproute2</pkg>
-			<pkg variant="debug">iputils-ping</pkg>
+			<!-- for debugging -->
+			<pkg>vim</pkg>
+			<pkg>iproute2</pkg>
+			<pkg>iputils-ping</pkg>
 			<!-- app -->
 			<pkg variant="app">coffee</pkg>
+			<pkg variant="app">qml-module-qtquick-controls</pkg>
+			<pkg variant="app">qml-module-qtquick-layouts</pkg>
+			<!-- QT6 build dependencies from https://wiki.qt.io/Cross-Compile_Qt_6_for_Raspberry_Pi -->
+			<pkg variant="qt6_sdk">libboost-all-dev</pkg>
+			<pkg variant="qt6_sdk">libudev-dev</pkg>
+			<pkg variant="qt6_sdk">libinput-dev</pkg>
+			<pkg variant="qt6_sdk">libts-dev</pkg>
+			<pkg variant="qt6_sdk">libmtdev-dev</pkg>
+			<pkg variant="qt6_sdk">libjpeg-dev</pkg>
+			<pkg variant="qt6_sdk">libfontconfig1-dev</pkg>
+			<pkg variant="qt6_sdk">libssl-dev</pkg>
+			<pkg variant="qt6_sdk">libdbus-1-dev</pkg>
+			<pkg variant="qt6_sdk">libglib2.0-dev</pkg>
+			<pkg variant="qt6_sdk">libxkbcommon-dev</pkg>
+			<pkg variant="qt6_sdk">libegl1-mesa-dev</pkg>
+			<pkg variant="qt6_sdk">libgbm-dev</pkg>
+			<pkg variant="qt6_sdk">libgles2-mesa-dev</pkg>
+			<pkg variant="qt6_sdk">mesa-common-dev</pkg>
+			<pkg variant="qt6_sdk">libasound2-dev</pkg>
+			<pkg variant="qt6_sdk">libpulse-dev</pkg>
+			<pkg variant="qt6_sdk">gstreamer1.0-omx</pkg>
+			<pkg variant="qt6_sdk">libgstreamer1.0-dev</pkg>
+			<pkg variant="qt6_sdk">libgstreamer-plugins-base1.0-dev</pkg>
+			<pkg variant="qt6_sdk">gstreamer1.0-alsa</pkg>
+			<pkg variant="qt6_sdk">libvpx-dev</pkg>
+			<pkg variant="qt6_sdk">libsrtp2-dev</pkg>
+			<pkg variant="qt6_sdk">libsnappy-dev</pkg>
+			<pkg variant="qt6_sdk">libnss3-dev</pkg>
+			<pkg variant="qt6_sdk">flex</pkg>
+			<pkg variant="qt6_sdk">bison</pkg>
+			<pkg variant="qt6_sdk">libxslt-dev</pkg>
+			<pkg variant="qt6_sdk">ruby</pkg>
+			<pkg variant="qt6_sdk">gperf</pkg>
+			<pkg variant="qt6_sdk">libbz2-dev</pkg>
+			<pkg variant="qt6_sdk">libcups2-dev</pkg>
+			<pkg variant="qt6_sdk">libatkmm-1.6-dev</pkg>
+			<pkg variant="qt6_sdk">libxi6</pkg>
+			<pkg variant="qt6_sdk">libxcomposite1</pkg>
+			<pkg variant="qt6_sdk">libfreetype6-dev</pkg>
+			<pkg variant="qt6_sdk">libicu-dev</pkg>
+			<pkg variant="qt6_sdk">libsqlite3-dev</pkg>
+			<pkg variant="qt6_sdk">libxslt1-dev</pkg>
+			<pkg variant="qt6_sdk">libavcodec-dev</pkg>
+			<pkg variant="qt6_sdk">libavformat-dev</pkg>
+			<pkg variant="qt6_sdk">libswscale-dev</pkg>
+			<pkg variant="qt6_sdk">libx11-dev</pkg>
+			<pkg variant="qt6_sdk">freetds-dev</pkg>
+			<pkg variant="qt6_sdk">libsqlite3-dev</pkg>
+			<pkg variant="qt6_sdk">libpq-dev</pkg>
+			<pkg variant="qt6_sdk">libiodbc2-dev</pkg>
+			<pkg variant="qt6_sdk">firebird-dev</pkg>
+			<pkg variant="qt6_sdk">libgst-dev</pkg>
+			<pkg variant="qt6_sdk">libxext-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb1</pkg>
+			<pkg variant="qt6_sdk">libxcb1-dev</pkg>
+			<pkg variant="qt6_sdk">libx11-xcb1</pkg>
+			<pkg variant="qt6_sdk">libx11-xcb-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-keysyms1</pkg>
+			<pkg variant="qt6_sdk">libxcb-keysyms1-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-image0</pkg>
+			<pkg variant="qt6_sdk">libxcb-image0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-shm0</pkg>
+			<pkg variant="qt6_sdk">libxcb-shm0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-icccm4</pkg>
+			<pkg variant="qt6_sdk">libxcb-icccm4-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-sync1</pkg>
+			<pkg variant="qt6_sdk">libxcb-sync-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-render-util0</pkg>
+			<pkg variant="qt6_sdk">libxcb-render-util0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xfixes0-dev</pkg>
+			<pkg variant="qt6_sdk">libxrender-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-shape0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-randr0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-glx0-dev</pkg>
+			<pkg variant="qt6_sdk">libxi-dev</pkg>
+			<pkg variant="qt6_sdk">libdrm-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xinerama0</pkg>
+			<pkg variant="qt6_sdk">libxcb-xinerama0-dev</pkg>
+			<pkg variant="qt6_sdk">libatspi2.0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcursor-dev</pkg>
+			<pkg variant="qt6_sdk">libxcomposite-dev</pkg>
+			<pkg variant="qt6_sdk">libxdamage-dev</pkg>
+			<pkg variant="qt6_sdk">libxss-dev</pkg>
+			<pkg variant="qt6_sdk">libxtst-dev</pkg>
+			<pkg variant="qt6_sdk">libpci-dev</pkg>
+			<pkg variant="qt6_sdk">libcap-dev</pkg>
+			<pkg variant="qt6_sdk">libxrandr-dev</pkg>
+			<pkg variant="qt6_sdk">libdirectfb-dev</pkg>
+			<pkg variant="qt6_sdk">libaudio-dev</pkg>
+			<pkg variant="qt6_sdk">libxkbcommon-x11-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-composite0</pkg>
+			<pkg variant="qt6_sdk">libxcb-composite0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-cursor-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-cursor0</pkg>
+			<pkg variant="qt6_sdk">libxcb-damage0</pkg>
+			<pkg variant="qt6_sdk">libxcb-damage0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-doc</pkg>
+			<pkg variant="qt6_sdk">libxcb-dpms0</pkg>
+			<pkg variant="qt6_sdk">libxcb-dpms0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-dri2-0</pkg>
+			<pkg variant="qt6_sdk">libxcb-dri2-0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-dri3-0</pkg>
+			<pkg variant="qt6_sdk">libxcb-dri3-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-ewmh-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-ewmh2</pkg>
+			<pkg variant="qt6_sdk">libxcb-glx0</pkg>
+			<pkg variant="qt6_sdk">libxcb-glx0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-icccm4</pkg>
+			<pkg variant="qt6_sdk">libxcb-icccm4-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-image0</pkg>
+			<pkg variant="qt6_sdk">libxcb-image0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-imdkit-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-imdkit1</pkg>
+			<pkg variant="qt6_sdk">libxcb-keysyms1</pkg>
+			<pkg variant="qt6_sdk">libxcb-keysyms1-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-present-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-present0</pkg>
+			<pkg variant="qt6_sdk">libxcb-randr0</pkg>
+			<pkg variant="qt6_sdk">libxcb-randr0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-record0</pkg>
+			<pkg variant="qt6_sdk">libxcb-record0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-render-util0</pkg>
+			<pkg variant="qt6_sdk">libxcb-render-util0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-render0</pkg>
+			<pkg variant="qt6_sdk">libxcb-render0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-res0</pkg>
+			<pkg variant="qt6_sdk">libxcb-res0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-screensaver0</pkg>
+			<pkg variant="qt6_sdk">libxcb-screensaver0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-shape0</pkg>
+			<pkg variant="qt6_sdk">libxcb-shape0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-shm0</pkg>
+			<pkg variant="qt6_sdk">libxcb-shm0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-sync-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-sync1</pkg>
+			<pkg variant="qt6_sdk">libxcb-util-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-util0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-util1</pkg>
+			<pkg variant="qt6_sdk">libxcb-xf86dri0</pkg>
+			<pkg variant="qt6_sdk">libxcb-xf86dri0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xfixes0</pkg>
+			<pkg variant="qt6_sdk">libxcb-xfixes0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xinerama0</pkg>
+			<pkg variant="qt6_sdk">libxcb-xinerama0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xinput-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xinput0</pkg>
+			<pkg variant="qt6_sdk">libxcb-xkb-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xkb1</pkg>
+			<pkg variant="qt6_sdk">libxcb-xrm-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xrm0</pkg>
+			<pkg variant="qt6_sdk">libxcb-xtest0</pkg>
+			<pkg variant="qt6_sdk">libxcb-xtest0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xv0</pkg>
+			<pkg variant="qt6_sdk">libxcb-xv0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb-xvmc0</pkg>
+			<pkg variant="qt6_sdk">libxcb-xvmc0-dev</pkg>
+			<pkg variant="qt6_sdk">libxcb1</pkg>
+			<pkg variant="qt6_sdk">libxcb1-dev</pkg>
 		</pkg-list>
 		<finetuning>
 			<!-- config raspi firmware -->
@@ -112,7 +270,10 @@
 			<command>systemctl enable systemd-resolved</command>
 			<!-- NTP client -->
 			<command>systemctl enable systemd-timesyncd</command>
+			<!-- auto-start coffee app -->
+			<command variant="app">systemctl enable coffee</command>
 		</finetuning>
 	</target>
 	<archivedir>overlays/networkd</archivedir>
+	<archivedir variant="app">overlays/systemd</archivedir>
 </ns0:RootFileSystem>

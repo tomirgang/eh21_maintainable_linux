@@ -12,7 +12,7 @@ Inspired by https://wiki.qt.io/Cross-Compile_Qt_6_for_Raspberry_Pi
 
 In folder `examples/elbe_advanced/image`:
 
-- Build image and SDK: `elbe initvm submit --skip-build-sources --skip-build-bin --build-sdk rpi-image/aarch64_rpi4_qt6.xml`
+- Build image and SDK: `elbe initvm submit --skip-build-sources --skip-build-bin --build-sdk --variant qt6_sdk rpi-image/aarch64_rpi4.xml`
 
 - Install SDK:
     - cd `elbe-build-*`
@@ -249,4 +249,3 @@ We can also test the image on hardware.
 # Auto-start the app
 
 TODO: Systemd unit file 
-
