@@ -273,6 +273,9 @@
 			<command>ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf</command>
 			<!-- auto-start coffee app -->
 			<command variant="app">systemctl enable coffee</command>
+			<!-- and disable getty on screen -->
+			<command variant="app">systemctl mask getty@tty1</command>
+			<command variant="app">systemctl disable getty@tty1</command>
 		</finetuning>
 	</target>
 	<archivedir>overlays/networkd</archivedir>
