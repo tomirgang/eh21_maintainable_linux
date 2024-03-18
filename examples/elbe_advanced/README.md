@@ -1,6 +1,191 @@
 # Advanced elbe examples
 
-## Build app with custom QT
+## Build app using Debian QT6 packages
+
+We can build our app using the QT packages from our choosen base distribution. This approach has the drawback that we have no choice which QT version to use, but we also don't need to maintain our own QT version and get the security maintenance "for free".
+
+Debian Bookworm is providing QT 6.4.2.
+
+### Build the app for the host environment
+
+For this part we will use the coffee demo app of QT 6.4.2 from https://github.com/qt/qtdoc/tree/6.4.2/examples/demos/coffee.
+This app source is contained in `examples/elbe_advanced/coffee-6.4.2`. 
+
+First we need to install the build dependencies:
+
+```bash
+sudo apt install qt6-base-dev qt6-declarative-dev
+```
+
+Now we can build the app:
+
+```bash
+cd examples/elbe_advanced
+mkdir build
+cd build
+cmake ../coffee-6.4.2/
+make
+```
+
+This should create a `coffee` binary in the build folder, which you can run on your host machine.
+
+The most easy way to build the app for our image and the target CPU architecture is to package it using `pbuilder`.
+
+### Package the app using pbuilder
+
+Install pbuilder: `sudo apt install pbuilder debootstrap devscripts`
+
+Our example image `examples/elbe_advanced/image/rpi-image/aarch64_rpi4.xml` is configured to use Debian Bookworm.
+
+We can configure pbuilder to build for this distribution using a `.pbuilderrc` file.
+
+```bash
+echo "DISTRIBUTION=bookworm" >> ~/.pbuilderrc
+echo "MIRRORSITE=http://ftp.de.debian.org/debian" >> ~/.pbuilderrc
+```
+
+To enable cross-compilation, we need to configure the apt dependency resolution: 
+
+```bash
+echo 'PBUILDERSATISFYDEPENDSCMD="/usr/lib/pbuilder/pbuilder-satisfydepends-apt"' >> ~/.pbuilderrc
+```
+
+To build the app package, we need to create Debian package metadata.
+We use `dh_make` from package `dh-make` to generate the metadata:
+
+```bash
+# install needed package
+sudo apt install dh-make
+
+# change to app folder - the name must be <package name>-<package version>
+cd examples/elbe_advanced/coffee-6.4.2
+
+# set the expected environment metadata describing the maintainer
+export DEBFULLNAME="Thomas Irgang"
+export DEBEMAIL="thomas@irgang.eu"
+
+# generate the matadata
+dh_make -n -s --yes
+```
+
+Next we need to finetune the generated metadata in `examples/elbe_advanced/coffee-6.4.2/debian`.
+
+At least, we should complete the `debian/control` file.
+For building the QT6 coffee example app, we need to add the following additional build dependencies:
+
+- qt6-base-dev
+- qt6-declarative-dev
+
+We also need to add the dynamic loaded app dependencies. The coffee app relies on:
+
+- qml6-module-qtquick
+- qml6-module-qtquick-controls
+- qml6-module-qtquick-layouts
+- qml6-module-qtquick-templates
+- qml6-module-qtquick-window
+- qml6-module-qtqml-workerscript
+
+Now we can build the package by running `pdebuild` in folder `examples/elbe_advanced/coffee-6.4.2`.
+This will build package for the host CPU architecture.
+The build results are stored in `/var/cache/pbuilder/result`.
+
+### Cross-build the package for aarch64
+
+We can build for our target CPU architecutre _arm64_ in a similar way:
+
+```bash
+pdebuild -- --host-arch arm64
+```
+
+The resulting package is also stored in `/var/cache/pbuilder/result`.
+
+### Tipps
+
+- In case of build issues, uncomment the line `export DH_VERBOSE = 1` in `examples/elbe_advanced/coffee-6.4.2/debian/rules` to enable additional build logs.
+- You can inspect the content of the resulting package with `dpkg-deb`: `dpkg-deb -c /var/cache/pbuilder/result/coffee_6.4.2_arm64.deb`
+- You can install the host package using: `sudo dpkg -i /var/cache/pbuilder/result/coffee_6.4.2_amd64.deb`
+
+# Install the app
+
+The new app package and it's configuration is added to `examples/elbe_advanced/image/rpi-image/aarch64_rpi4.xml` using the variant _app_.
+
+This variant adds the following changes:
+- Add package _coffee_.
+- Add an overlay containing a Systemd unit file which runs the app as a service.
+- Use finetuning to:
+    - enable the new _coffee service_
+    - disable _getty@tty1_, which would render a login screen on the HDMI screen.
+
+This time, we will use the lower level _elbe control_ commands, to be able to add our debian package to the elbe project bevor running the build.
+
+```bash
+# create a new elbe project, and save the ID as my.prj
+elbe control create_project > my.prj
+# make the elbe project ID available as environment variable
+export PRJ=$(cat my.prj)
+# preprocess the XML - this hashes the password and generates the right variant
+# the result is gz compressed
+elbe preprocess --variant app rpi-image/aarch64_rpi4.xml
+# upload the XML to the initvm project
+elbe control set_xml $PRJ preprocess.xml
+# upload our binary coffee Debian package to the initvm
+elbe prjrepo upload_pkg $PRJ /var/cache/pbuilder/result/coffee_6.4.2_arm64.deb
+# upload our source coffee Debian package to the initvm (for sources ISO)
+cd ..
+elbe prjrepo upload_pkg $PRJ /var/cache/pbuilder/result/coffee_6.4.2.dsc
+cd image
+# list all available packages for this project - not needed, just for info
+elbe prjrepo list_packages $PRJ
+# trigger rebuild - this will run a background build
+elbe control build $PRJ
+# watch build logs an wait till build is finished
+elbe control wait_busy $PRJ
+# create a folder for the build results
+mkdir elbe-build-result
+# download build all build results
+elbe control get_files --output elbe-build-result $PRJ
+```
+
+## Check the image
+
+We can confirm that our app is contained by local mounting the image.
+
+```bash
+cd elbe-build-result
+# detecet image partitions - will make loop0p1 and loop0p2 available
+# p1 is boot, p2 is root
+sudo losetup --partscan --find --show sdcard.img
+# create mount point
+mkdir root
+# mount the root filesystem
+sudo mount /dev/loop0p2 ${PWD}/root
+```
+
+No we can check if the binary is available: `find ./root -name "coffee" 2>/dev/null`
+
+This should result in the following output:
+
+```bash
+./usr/share/doc/coffee
+./usr/examples/coffee
+```
+
+Inspect the binary: `file ./root/usr/examples/coffee`
+
+```bash
+./usr/examples/coffee: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=e498c5152eddf1c44085a6b9c275021da89e5d6e, for GNU/Linux 3.7.0, stripped
+```
+
+And unmount the disk:
+
+```bash
+# unmount the partition
+sudo umount ${PWD}/root
+# unmount the image
+sudo losetup -D
+```
+
+# Build app with latest QT
 
 Inspired by https://wiki.qt.io/Cross-Compile_Qt_6_for_Raspberry_Pi
 
@@ -80,201 +265,3 @@ Unmount the SD card and boot it in the Pi. Then:
 
 
 **Problem:** Now we would need to package and maintain our custom QT version. :/
-
-# Build app using Debian QT6 packages
-
-To avoid this effort, or the security issues if we don't care about the maintenance, we can build our app using the QT packages from our choosen base distribution.
-This approach has the drawback that we have no choice which QT version to use.
-Debian Bookworm is providing QT 6.4.2.
-
-## Build the app for the host environment
-
-For this part we will use the coffee demo app of QT 6.4.2 from https://github.com/qt/qtdoc/tree/6.4.2/examples/demos/coffee.
-This app source is contained in `examples/elbe_advanced/coffee-6.4.2`. 
-
-First we need to install the build dependencies:
-
-```bash
-sudo apt install qt6-base-dev qt6-declarative-dev
-```
-
-Now we can build the app:
-
-```bash
-cd examples/elbe_advanced
-mkdir build
-cd build
-cmake ../coffee-6.4.2/
-make
-```
-
-This should create a `coffee` binary in the build folder, which you can run to test it.
-
-The most easy way to build the app for our image and the target CPU architecture is to package it using `pbuilder`.
-
-## Package the app using pbuilder
-
-Install pbuilder: `sudo apt install pbuilder debootstrap devscripts`
-
-Our example image `examples/elbe_advanced/image/rpi-image/aarch64_rpi4.xml` is configured to use Debian Bookworm.
-
-We can configure pbuilder to build for this distribution using a `.pbuilderrc` file.
-
-```bash
-echo "DISTRIBUTION=bookworm" >> ~/.pbuilderrc
-echo "MIRRORSITE=http://ftp.de.debian.org/debian" >> ~/.pbuilderrc
-```
-
-To enable cross-compilation, we need to configure the apt dependency resolution: 
-
-```bash
-echo 'PBUILDERSATISFYDEPENDSCMD="/usr/lib/pbuilder/pbuilder-satisfydepends-apt"' >> ~/.pbuilderrc
-```
-
-To build the app package, we need to create Debian package metadata.
-We use `dh_make` from package `dh-make` to generate the metadata:
-
-```bash
-# install needed package
-sudo apt install dh-make
-
-# change to app folder - the name must be <package name>-<package version>
-cd examples/elbe_advanced/coffee-6.4.2
-
-# set the expected environment metadata describing the maintainer
-export DEBFULLNAME="Thomas Irgang"
-export DEBEMAIL="thomas@irgang.eu"
-
-# generate the matadata
-dh_make -n -s --yes
-```
-
-Next we need to finetune the generated metadata in `examples/elbe_advanced/coffee-6.4.2/debian`.
-
-At least, we should complete the `debian/control` file.
-For building the QT6 coffee example app, we need to add the following additional build time dependencies:
-
-- qt6-base-dev
-- qt6-declarative-dev
-
-We also need to app the dynamic loaded app dependencies. The coffee app relies on:
-
-- qml6-module-qtquick
-- qml6-module-qtquick-controls
-- qml6-module-qtquick-layouts
-- qml6-module-qtquick-templates
-- qml6-module-qtquick-window
-- qml6-module-qtqml-workerscript
-
-Now we can build the package by running `pdebuild` in folder `examples/elbe_advanced/coffee-6.4.2`.
-This will build package for the host CPU architecture.
-The build results are stored in `/var/cache/pbuilder/result`.
-
-### Cross-build the package for aarch64
-
-We can build for our target CPU architecutre _arm64_ in a similar way:
-
-```bash
-pdebuild -- --host-arch arm64
-```
-
-The resulting package is also stored in `/var/cache/pbuilder/result`.
-
-### Tipps
-
-- In case of build issues, uncomment the line `export DH_VERBOSE = 1` in `examples/elbe_advanced/coffee-6.4.2/debian/rules` to enable additional build logs
-- You can inspect the content of the resulting package with `dpkg-deb`: `dpkg-deb -c /var/cache/pbuilder/result/coffee_6.4.2_arm64.deb`
-- You can install the host package using: `sudo dpkg -i /var/cache/pbuilder/result/coffee_6.4.2_amd64.deb`
-
-# Install the app
-
-First we need to build the app.
-
-This time, we will use the lower level _elbe control_ commands, to be able to add our debian package bevor the build.
-
-```bash
-# create a new elbe project, and save the ID as my.prj
-elbe control create_project > my.prj
-# make the elbe project ID available as environment variable
-export PRJ=$(cat my.prj)
-# preprocess the XML - this hashes the password and generates the right variant
-# the result is gz compressed
-elbe preprocess --variant app rpi-image/aarch64_rpi4.xml
-# upload the XML to the initvm project
-elbe control set_xml $PRJ preprocess.xml
-# upload our binary coffee Debian package to the initvm
-elbe prjrepo upload_pkg $PRJ /var/cache/pbuilder/result/coffee_6.4.2_arm64.deb
-# upload our source coffee Debian package to the initvm (for sources ISO)
-cd ..
-elbe prjrepo upload_pkg $PRJ /var/cache/pbuilder/result/coffee_6.4.2.dsc
-cd image
-# list all available packages for this project - not needed, just for info
-elbe prjrepo list_packages $PRJ
-# trigger rebuild - this will run a background build
-elbe control build $PRJ
-# watch build logs an wait till build is finished
-elbe control wait_busy $PRJ
-# create a folder for the build results
-mkdir elbe-build-result
-# download build all build results
-elbe control get_files --output elbe-build-result $PRJ
-```
-
-## Check the image
-
-We can confirm that our app is contained by local mounting the image.
-
-```bash
-cd elbe-build-result
-# detecet image partitions - will make loop0p1 and loop0p2 available
-# p1 is boot, p2 is root
-sudo losetup --partscan --find --show sdcard.img
-# create mount point
-mkdir root
-# mount the root filesystem
-sudo mount /dev/loop0p2 ${PWD}/root
-```
-
-No we can check if the binary is available: `find ./root -name "coffee" 2>/dev/null`
-
-This should result in the following output:
-
-```bash
-./usr/share/doc/coffee
-./usr/examples/coffee
-```
-
-Inspect the binary: `file ./root/usr/examples/coffee`
-
-```bash
-./usr/examples/coffee: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=e498c5152eddf1c44085a6b9c275021da89e5d6e, for GNU/Linux 3.7.0, stripped
-```
-
-And unmount the disk:
-
-```bash
-# unmount the partition
-sudo umount ${PWD}/root
-# unmount the image
-sudo losetup -D
-```
-
-We can also test the image on hardware.
-
-# Auto-start the app
-
-We can run the app using systemd, by creating a simple unit file and mark the serivce for autostart.
-
-The unit file is added as an overlay. See `examples/elbe_advanced/image/rpi-image/overlays/systemd`.
-
-Alternative, we could have added the service file to the coffee package.
-
-The service is enabled in the image description using a finetune command:
-
-```xml
-			<!-- auto-start coffee app -->
-			<command variant="app">systemctl enable coffee</command>
-            <!-- and disable getty on screen -->
-			<command variant="app">systemctl mask getty@tty1</command>
-			<command variant="app">systemctl disable getty@tty1</command>
-```

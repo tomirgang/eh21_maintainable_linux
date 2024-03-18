@@ -100,13 +100,17 @@
 			<pkg variant="app">coffee</pkg>
 		</pkg-list>
 		<pkg-list variant="qt6_run">
-		<!-- QT 6.6.2 app runtime dependencies -->
+			<!-- QT 6.6.2 app runtime dependencies -->
 			<pkg>libgles2</pkg>
 			<pkg>libegl-dev</pkg>
 			<pkg>libfontconfig-dev</pkg>
 			<pkg>libglib2.0-0</pkg>
 			<pkg>libxkbcommon-dev</pkg>
 			<pkg>libharfbuzz-dev</pkg>
+			<!-- Without this, the app fails to start with unclear error.
+			There are more dependencies which are installed as depencency
+			of this package. -->
+			<pkg>qt6-declarative-dev</pkg>
 		</pkg-list>
 		<pkg-list variant="qt6_sdk">
 			<!-- QT6 build dependencies from https://wiki.qt.io/Cross-Compile_Qt_6_for_Raspberry_Pi -->
