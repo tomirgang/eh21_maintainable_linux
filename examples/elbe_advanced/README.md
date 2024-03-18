@@ -21,13 +21,6 @@ In folder `examples/elbe_advanced/image`:
 
 ### Build QT6 host tools
 
-Source the SDK environment: 
-In folder `examples/elbe_advanced/sdk`:
-
-```bash
-source environment-setup-elbe-aarch64-linux-gnu-rpi4-image-1.0
-```
-
 In folder `examples/elbe_advanced/qt6/qt-hostbuild`:
 
 ```bash
@@ -64,24 +57,26 @@ cmake --install .
 
 ### Build app
 
-- Change to app build folder: `examples/elbe_advanced/coffee-build-cross`
+- Create and change to app build folder: `examples/elbe_advanced/coffee-build-cross`
 - Ensure that it's not a symlinked folder: `cd $(realpath ${PWD})`
-- Prepare build: `./../qt6/qt-raspi/bin/qt-cmake ../coffee_v6.6.2/CMakeLists.txt`
+- Prepare build: `./../qt6/qt-raspi/bin/qt-cmake ../coffee-6.6.2/CMakeLists.txt`
 - Build app: `cmake --build . --parallel 8`
 
-This will generate a binary `coffee` in `examples/elbe_advanced/qt6/qt5/qtdoc/examples/demos/coffee`
+This will generate a binary `coffee` in `examples/elbe_advanced/coffee-build-cross`.
 
 ### Test the app
 
+- Build image without SDK packages: `elbe initvm submit --skip-build-sources --skip-build-bin rpi-image/aarch64_rpi4.xml --variant qt6_run`
+- Flash the image to an SD card.
 - Mount the SD card and change to the root folder.
-- Create the QT6 library folder: `sudo mkdir -p /usr/local/qt6`
+- Create the QT6 library folder: `sudo mkdir -p usr/local/qt6`
 - Copy the content of `examples/elbe_advanced/qt6/qt-raspi` to `usr/local/qt6` in the mounted Raspberry Pi root filesystem.
 - Copy the app binary to the Raspberry Pi root filesystem.
 
 Unmount the SD card and boot it in the Pi. Then:
 
 - Add QT library path: `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/qt6/lib/`
-- Run the app: `./coffeemachine -platform eglfs`
+- Run the app: `/coffee -platform eglfs`
 
 
 **Problem:** Now we would need to package and maintain our custom QT version. :/

@@ -89,6 +89,7 @@
 			<pkg>systemd-timesyncd</pkg>
 			<!-- default tools -->
 			<pkg>util-linux</pkg>
+			<pkg>locales</pkg>
 			<!-- shell -->
 			<pkg>bash</pkg>
 			<!-- for debugging -->
@@ -97,6 +98,15 @@
 			<pkg>iputils-ping</pkg>
 			<!-- app -->
 			<pkg variant="app">coffee</pkg>
+		</pkg-list>
+		<pkg-list variant="qt6_run">
+		<!-- QT 6.6.2 app runtime dependencies -->
+			<pkg>libgles2</pkg>
+			<pkg>libegl-dev</pkg>
+			<pkg>libfontconfig-dev</pkg>
+			<pkg>libglib2.0-0</pkg>
+			<pkg>libxkbcommon-dev</pkg>
+			<pkg>libharfbuzz-dev</pkg>
 		</pkg-list>
 		<pkg-list variant="qt6_sdk">
 			<!-- QT6 build dependencies from https://wiki.qt.io/Cross-Compile_Qt_6_for_Raspberry_Pi -->
@@ -268,14 +278,18 @@
 			<command>systemctl enable systemd-resolved</command>
 			<!-- NTP client -->
 			<command>systemctl enable systemd-timesyncd</command>
-			<!-- link resolv conf for systemd-resolved -->
-			<command>rm -f /etc/resolv.conf</command>
-			<command>ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf</command>
+			<!-- set locales -->
+			<command>echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen</command>
+			<command>locale-gen</command>
+			<!-- link resolv.conf -->
+			<ln path="/run/systemd/resolve/stub-resolv.conf">/etc/resolv.conf</ln>
 			<!-- auto-start coffee app -->
 			<command variant="app">systemctl enable coffee</command>
 			<!-- and disable getty on screen -->
 			<command variant="app">systemctl mask getty@tty1</command>
 			<command variant="app">systemctl disable getty@tty1</command>
+			<!-- add cross-build QT 6 to lib search path -->
+			<command variant="qt6_run">echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/usr/local/qt6/lib/" >> /root/.bashrc</command>
 		</finetuning>
 	</target>
 	<archivedir>overlays/networkd</archivedir>
