@@ -381,7 +381,7 @@
 		\item Get the source code of the example app
 		\item Create a build folder and build the app:
 		\begin{itemize}
-			\item cmake \emph{<path to>/coffee}
+			\item cmake \emph{path-to/coffee}
 			\item make
 		\end{itemize}
 	\end{itemize}
@@ -410,30 +410,87 @@
 \end{frame}
 
 \begin{frame}{Step 3: Package the app - fine-tune metadata}
+	Now we need to fine-tune the generated metadata:
+	\begin{itemize}
+		\item Add the build dependencies:
+		\begin{itemize}
+			\item \emph{qt6-base-dev}
+			\item \emph{qt6-declarative-dev}
+		\end{itemize}
+		\item During the package build, shared library dependencies will be filled automatically by \emph{shlibs}, but we need to add manually the dynamic loaded libraries:
+		\begin{itemize}
+			\item \emph{qml6-module-qtquick}
+			\item \emph{qml6-module-qtquick-controls}
+			\item \emph{qml6-module-qtquick-layouts}
+			\item \emph{qml6-module-qtquick-templates}
+			\item \emph{qml6-module-qtquick-window}
+			\item \emph{qml6-module-qtqml-workerscript}
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Step 4: Package the app - configure pbuilder}
+	Our image is based on Debian Bookwork. Configure pbuilder:
+	\begin{itemize}
+		\item Create \emph{.pbuilderrc}:
+	\end{itemize}
+	
+	\small{\emph{echo "DISTRIBUTION=bookworm" $>>$ ~/.pbuilderrc} \\
+	\emph{echo "MIRRORSITE=http://ftp.de.debian.org/debian" $>>$ ~/.pbuilderrc}}
+	
+	\begin{itemize}
+		\item For cross-compilation support, we need to enable the apt dependency resolution:
+	\end{itemize}
+	\small{\emph{echo 'PBUILDERSATISFYDEPENDSCMD="/usr/lib/pbuilder/pbuilder-satisfydepends-apt"' $>>$ ~/.pbuilderrc}}
 \end{frame}
 
 \begin{frame}{Step 5: Package the app - build the package}
-\end{frame}
-
-\begin{frame}{Step 5: Package the app - build the package}
+	Now we can build the app:
+	\begin{itemize}
+		\item Run \emph{pdebuild} in the folder containing the coffee app: \\ \emph{pdebuild -- --host-arch arm64}
+	\end{itemize}
+	This will generate a \emph{coffee\_6.4.2\_arm64.deb} in \emph{/var/cache/pbuilder/result}.
 \end{frame}
 
 \begin{frame}{Step 6: Install the app}
+	\begin{itemize}
+		\item Add app to image description: \emph{<pkg variant="app">coffee</pkg>}
+		\item Build image with app:
+		\small{\begin{itemize}
+			\item \emph{elbe control create\_project $>$ my.prj}
+			\item \emph{export PRJ=\$(cat my.prj)}
+			\item \emph{elbe preprocess --variant app rpi-image/aarch64\_rpi4.xml}
+			\item \emph{elbe control set\_xml \$PRJ preprocess.xml}
+			\item \emph{elbe prjrepo upload\_pkg \$PRJ /var/cache/pbuilder/result/coffee\_6.4.2\_arm64.deb}
+			\item \emph{elbe control build \$PRJ}
+			\item wait for build finishing and download results.
+		\end{itemize}}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Step 7: Auto-start the app}
+	The final step is to automatically run the app on system startup.
+	\begin{itemize}
+		\item Create a systemd unit file to run the binary.
+		\href{https://github.com/tomirgang/eh21_maintainable_linux/blob/main/examples/elbe_advanced/image/rpi-image/overlays/systemd/etc/systemd/system/coffee.service}{Github}
+		\item Enable the new service using a \emph{finetuning} command:
+		\begin{itemize}
+			\item \emph{$<$command variant="app"$>$systemctl enable coffee$<$/command$>$}
+		\end{itemize}
+		\item Disable the getty on the HDMI tty:
+		\begin{itemize}
+			\item \emph{$<$command variant="app"$>$systemctl mask getty@tty1$<$/command$>$}
+			\item \emph{$<$command variant="app"$>$systemctl disable getty@tty1$<$/command$>$}
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
-\begin{frame}{How to realize this project with Elbe?}
-	\begin{block}{Using the latest QT version}
-		How to implement the coffee machine project with Elbe using the latest QT version?
-	\end{block}
+\section{The End}
 
-	\begin{block}{Warning}
-		This approach has the drawback that you have to maintain your QT version!
+\begin{frame}{The End}
+	\begin{block}{Any questions?}
+		We hope you enjoyed the talk.
+		Your questions are now welcome!
 	\end{block}
 \end{frame}
 
