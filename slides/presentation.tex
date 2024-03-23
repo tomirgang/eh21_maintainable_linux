@@ -309,7 +309,8 @@
 	\begin{tabular}{c|ccccc}
 		& \textbf{Build} & \textbf{Startup} & \textbf{Size} & \textbf{Processes} & \textbf{Packages} \\
 		\hline
-		Yocto & 19:50 & ~7 s & 143 MB & 70 & - \\ 
+		Yocto(systemd) & 19:50 & ~7 s & 143 MB & 70 & - \\
+ 		Yocto & 19:59 & ~2.3 s & 10 MB & 42 & - \\ 
 		Buildroot & 23:35 & ~3 s & 132 MB & 45 & - \\
 		\hline
 		Debos & 6:30 & ~14s & 701 MB & 64 & 143 \\
@@ -387,8 +388,7 @@
 		\item Create a qtdoc\_git.bbappend file for qtdoc in\\
 			\emph{meta-coffee\/recipes-qt\/qt6}
 		\item Create the qtdoc-coffee package\\
-			\emph{PACKAGE\_BEFORE\_PN =+ "qtdoc-coffee" \\
-				  PACKAGES =+ "qtdoc-coffee"}	
+			\emph{PACKAGE\_BEFORE\_PN =+ "qtdoc-coffee"}	
 		\item And add relevant files for the app\\
 			\emph{PACKAGES =+ "qtdoc-coffee" \\
 				  FILES:qtdoc-coffee = "\$\{QT6\_INSTALL\_EXAMPLESDIR\}/demos/coffee \$\{systemd\_unitdir\}/system/"}
