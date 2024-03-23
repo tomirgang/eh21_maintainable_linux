@@ -1,6 +1,6 @@
 # Yocto minimal QEMU image
 
-We will 2 minimal Yocto images. One will be with systemd one with without
+We will build two minimal Yocto images. One will be with systemd one with without
 
 ## Image with systemd
 ### Prepare the build
