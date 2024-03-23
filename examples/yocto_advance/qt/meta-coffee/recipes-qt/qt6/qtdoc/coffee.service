@@ -1,0 +1,8 @@
+[Unit]
+Description=Coffeemachine
+
+[Service]
+ExecStart=/usr/share/examples/demos/coffee/coffeemachine
+
+[Install]
+WantedBy=multi-user.target

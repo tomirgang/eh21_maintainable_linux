@@ -1,0 +1,18 @@
+This README file contains information on the contents of the meta-coffee layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+
+	meta-qt6 in version 6.7
+	
+	And its dependencies see: https://code.qt.io/cgit/yocto/meta-qt6.git/about/
+	for the Yocto versions supported by this.
+
+
+I. Adding the meta-coffee layer to your build
+=================================================
+
+Run 'bitbake-layers add-layer meta-coffee'
+
