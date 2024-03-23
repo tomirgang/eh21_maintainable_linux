@@ -355,6 +355,77 @@
 	\end{block}
 \end{frame}
 
+
+\begin{frame}{How to realize this project with Yocto?}
+	\begin{block}{How to do?}
+		How to implement the coffee machine project with Yocto?
+	\end{block}
+	You can find many layers for QT with yocto. One can follow
+	\href{https://code.qt.io/cgit/yocto/meta-boot2qt.git/tree/README.md}{boot2qt} for the complete QT demo,
+	but we will create a tailored image with meta-qt6. Find the code for this example at
+	\href{https://github.com/tomirgang/eh21_maintainable_linux/tree/main/examples/yocto_advance/qt}{Github}.
+\end{frame}
+
+\begin{frame}{Step 1: Create coffee layer}
+	First let us create a layer where our app and image can be implemented:
+	\begin{itemize}
+		\item Create an own layer for this work\\
+			\emph{bitbake-layers create-layer ../meta-coffee}
+		\item Add needed build dependencies\\
+			\emph{LAYERDEPENDS\_meta-coffee = "core qt6-layer"}
+		\item Add the layer to the conf\\
+			\emph{bitbake-layers add-layer ../meta-coffee}
+	\end{itemize}
+	This should give you a folder meta-coffee where you can start implementing
+	the coffee package and image.
+\end{frame}
+
+\begin{frame}{Step 2: Seperate the coffee app}
+	Now let us adapt the existing package qtdoc from meta-qt6 to add a package
+	containing only the wanted app:
+	\begin{itemize}
+		\item Create a qtdoc\_git.bbappend file for qtdoc in\\
+			\emph{meta-coffee\/recipes-qt\/qt6}
+		\item Create the qtdoc-coffee package\\
+			\emph{PACKAGE\_BEFORE\_PN =+ "qtdoc-coffee" \\
+				  PACKAGES =+ "qtdoc-coffee"}	
+		\item And add relevant files for the app\\
+			\emph{PACKAGES =+ "qtdoc-coffee" \\
+				  FILES:qtdoc-coffee = "\$\{QT6\_INSTALL\_EXAMPLESDIR\}/demos/coffee \$\{systemd\_unitdir\}/system/"}
+	\end{itemize}
+	This should give you a \emph{qtdoc-coffee} package that you can include in an image.
+\end{frame}
+
+
+\begin{frame}{Step 3: Create the coffee image}
+	Next we can include the qtdoc-coffe package to an image
+	\begin{itemize}
+		\item Create a minimal-coffee.bb file for it in \emph{meta-coffee\/recipes-core\/images} and add\\
+			\emph{inherit core-image}
+		\item Add qtdoc-coffee and dependcies\\
+			\emph{IMAGE\_INSTALL += "weston qtimageformats qtsvg qtdoc-coffee"}	
+	\end{itemize}
+	This should give you a \emph{minimal-coffee} image already. In rhe source you will additionally
+	see how to enable autlogin.
+\end{frame}
+
+\begin{frame}{Step 4: Add coffee systemd service}
+	Now let us adapt the qtdoc bbappend further with a systemd service to start the app
+	directly.
+	\begin{itemize}
+		\item In qtdoc\_git.bbappend add\\
+			\emph{inherit systemd \\
+				 SYSTEMD\_SERVICE\_\$\{PN\}-coffee = "coffee.service" \\
+				 SRC\_URI:append = " file://coffee.service" \\
+				 do\_install:append() ...}
+		\item Create the service under \emph{meta-coffee/recipes-qt/qt6/qtdoc/coffee.service}\\
+				\emph{...\\
+					  ExecStart=/usr/share/examples/demos/coffee/coffeemachine\\
+					  ...}
+	\end{itemize}
+	This should give you a  \emph{minimal-coffee} that starts your \emph{coffeemachine}.
+\end{frame}
+
 \subsection{Coffee machine with Elbe}
 
 \begin{frame}{How to realize this project with Elbe?}
