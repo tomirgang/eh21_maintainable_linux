@@ -17,7 +17,7 @@ export MACHINE="qemux86-64"
  bitbake b2qt-embedded-qt6-image
 ```
 
-The build wll take now some time but with that we can try it out!
+The build will take now some time, but with that we can try it out!
 
 ### Boot image
 
@@ -25,7 +25,7 @@ The build wll take now some time but with that we can try it out!
  runqemu  qemuparams="--enable-kvm -m 8G -smp 8" 
 ```
 
-Note that -m passes the ammount of memory for Qemu, if it is too low the system will run out of memory.
+Note that -m passes the amount of memory for Qemu, if it is too low the system will run out of memory.
 
 We can see the coffee app already now!
 
@@ -65,7 +65,7 @@ Let's add our own layer for the adaptions via
 bitbake-layers create-layer ../meta-coffee
 ```
 
-We can remore the folder recipes-examples.
+We can remove the folder recipes-examples.
 As we use meta-qt6 content in the layer, it should depend on it in the layer.conf
 
 ```
@@ -83,7 +83,7 @@ bitbake-layers add-layer ../meta-coffee
 
 The coffeemachine is included in the qtdoc sources and gets packaged into the qtdoc-examples.
 As also all the other examples would be included in this package, we will create our own
-package only containing this package in a bbappend,.
+package only containing this package in a bbappend.
 
 ```
 PACKAGE_BEFORE_PN =+ "qtdoc-coffee"
@@ -130,7 +130,6 @@ do_install:append() {
 For adding our own image we can create a file minimal-coffee.bb that inherits the core-image class
 ```
 inherit core-image
-"
 ```
 
 As we do not want to enter login credentials, we will enable autlogin:
@@ -152,7 +151,7 @@ local_autologin () {
 ROOTFS_POSTPROCESS_COMMAND += "local_autologin"
 ```
 
-Last we need to add our cofee package and some needed dependencies:
+Last we need to add our coffee package and some needed dependencies:
 
 ```
 IMAGE_INSTALL += "\
@@ -165,7 +164,7 @@ IMAGE_INSTALL += "\
 
 ### local conf
 
-To build this imaage we will need to accept some commercial qt licnenses....
+To build this image we will need to accept some commercial qt licenses....
 
 ```
 LICENSE_FLAGS_ACCEPTED = "\
@@ -197,3 +196,35 @@ And start it e.g. in QEMU
  runqemu  qemuparams="--enable-kvm -m 8G -smp 8" 
 ```
 
+### Coffee on the rpi4
+
+To build this image now for the RPI4 we will need the bsp layer for it.
+You can fetch it via
+
+```
+git clone git://git.yoctoproject.org/meta-raspberrypi -b nanbield
+```
+
+Add this layer to bblayers.conf
+
+```
+bitbake-layers add-layer ../meta-raspberrypi 
+```
+
+Set MACHINE in local.conf
+
+```
+MACHINE = "raspberrypi4-64"
+```
+
+With this we can build the image again via
+
+```
+bitbake minimal-coffee
+```
+
+Use bmaptool to flash it
+
+```bash
+bmaptool copy build/tmp/deploy/images/raspberrypi4-64/minimal-coffee-raspberrypi4-64.rootfs.wic.bz2  /dev/SDCARDNAMEGOESHERE
+```
