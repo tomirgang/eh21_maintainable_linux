@@ -22,6 +22,7 @@
 \end{frame}
 
 \begin{frame}
+	% Simone
 	\begin{block}{Topic}
 		How to build long-term secure and maintainable embedded Linux solutions
 		while spending limited effort to keep the solution secure?
@@ -31,6 +32,7 @@
 \section{Is Linux the right choice?}
 
 \begin{frame}{Do I need Linux for my project?}
+	% Simone
 	Before we begin:
 
 	\begin{block}{Rule}
@@ -44,6 +46,7 @@
 \end{frame}
 
 \begin{frame}{Do I need Linux for my project?}
+	% Simone
 	\begin{tabular}{cccc}
 	&\includegraphics[width=1.9cm]{assets/Pixabay_Arduino_integrated-circuit-441289_1280.jpg} &
 	\includegraphics[width=1.9cm]{assets/ESP32.png} & 
@@ -56,12 +59,14 @@
 \end{frame}
 
 \begin{frame}{What's the life-time of my project?}
+	% Simone
 	\begin{block}{What's the life-time?}
 		Do I need to care about maintenance and updates?
 	\end{block}
 \end{frame}
 
 \begin{frame}{What's the life-time of my project?}
+	% Simone
 	\begin{columns}[t]
     \column{0.33\textwidth}
         \centering
@@ -93,12 +98,14 @@
 \section{Embedded Linux}
 
 \begin{frame}{How to build an embedded Linux distribution?}
+	% Simone
 	\begin{block}{Topic}
 		How to build a project specific embedded Linux distribution?
 	\end{block}
 \end{frame}
 
 \begin{frame}{The "golden image" approach}
+	% Simone
 	\begin{itemize}
 		\item starting from an existing Linux image, e.g. Raspberry Pi OS,
 		\item install the required tools,
@@ -124,6 +131,7 @@
 \end{frame}
 
 \begin{frame}{The "from scratch" approach}
+	% Simone
 	\begin{itemize}
 		\item using a built toolkit, e.g. Yocto or Buildroot
 		\item which builds all packages from source
@@ -149,6 +157,7 @@
 \end{frame}
 
 \begin{frame}{The "remix" approach}
+	% Simone
 	\begin{itemize}
 		\item use the packages from an existing distribution
 		\item and create a solution-specific remix
@@ -177,12 +186,14 @@
 \section{The source build toolkit}
 
 \begin{frame}
+	% Simone
 	\begin{block}{Topic}
 		How can I efficient build a customized embedded Linux distribution from scratch?
 	\end{block}
 \end{frame}
 
 \begin{frame}{Tools for source builds}
+	% Simone
 	\begin{tabular}{c|ccc}
 		& \textbf{Yocto} & \textbf{Buildroot}  \\
 		\hline
@@ -196,6 +207,7 @@
 
 
 \begin{frame}{Yocto}
+	% Simone
 	\begin{block}{Whats included?}
 		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution and a SDK. It also provides Poky as a reference distribution. Layer for many boards are available.
 	\end{block}
@@ -209,6 +221,7 @@
 \end{frame}
 
 \begin{frame}{Buildroot}
+	% Simone
 	\begin{block}{Whats included?}
 		Generate embedded Linux systems (Rootfs, Kernel, Bootloader, SDK)  based on a "Makefile collection" and configuration for a number of boards. Simpler then Yocto (easier, but less features)
 	\end{block}
@@ -224,12 +237,14 @@
 \section{Remixing a distribution}
 
 \begin{frame}
+	% Thomas
 	\begin{block}{Topic}
 		How can I efficient build a remix embedded Linux distribution?
 	\end{block}
 \end{frame}
 
 \begin{frame}{Tools for building a remix distribution}
+	% Thomas
 	\begin{tabular}{c|ccc}
 		& \textbf{Elbe} & \textbf{Debos} & \textbf{Kiwi-ng} \\
 		\hline
@@ -243,6 +258,7 @@
 \subsection{Kiwi-ng}
 
 \begin{frame}{Kiwi-ng}
+	% Thomas
 	\begin{block}{What's included?} 
 		Kiwi-ng is a utility to build Linux system appliances. 
 		An appliance is a ready to use image of an operating system including a pre-configured application for a specific use case. 
@@ -259,6 +275,7 @@
 \subsection{Debos}
 
 \begin{frame}{Debos}
+	% Thomas
 	\begin{block}{What's included?} 
 		debos is a tool to make the creation of various Debian-based OS images simpler. While most other tools focus on specific use-cases, debos is more meant as a tool-chain to make common actions trivial while providing enough rope to do whatever tweaking that might be required behind the scene.
 	\end{block}
@@ -274,6 +291,7 @@
 \subsection{Elbe}
 
 \begin{frame}{Elbe}
+	% Thomas
 	\begin{block}{What's included?} 
 		Elbe is a Debian-based system to generate root filesystems for embedded devices.
 	\end{block}
@@ -289,12 +307,14 @@
 \section{Minimal image}
 
 \begin{frame}{Which tool should I use?}
+	% Thomas
 	\begin{block}{Topic}
 		What is the right tool for my project?
 	\end{block}
 \end{frame}
 
 \begin{frame}{Which tool should I use?}
+	% Thomas
 	\begin{itemize}
 		\item Minimal image to compare the tools:
 		\begin{itemize}
@@ -306,6 +326,7 @@
 \end{frame}
 
 \begin{frame}{Comparison of different tools}
+	% Thomas
 	\begin{tabular}{c|ccccc}
 		& \textbf{Build} & \textbf{Startup} & \textbf{Size} & \textbf{Processes} & \textbf{Packages} \\
 		\hline
@@ -325,6 +346,7 @@
 \section{Example project}
 
 \begin{frame}{The coffee machine}
+	% Thomas
 	The example project:
 	\begin{itemize}
 		\item Raspberry Pi 4 as target platform
@@ -341,6 +363,7 @@
 \end{frame}
 
 \begin{frame}{The coffee machine}
+	% Thomas
 	\begin{tabular}{cc}
 		\href{https://github.com/qt/qtdoc/tree/v6.4.2/examples/demos/coffee}{QT 6.4.2} &
 		\href{https://github.com/qt/qtdoc/tree/v6.6.2/examples/demos/coffee}{QT 6.6.2} \\
@@ -352,6 +375,7 @@
 \subsection{Coffee machine with Yocto}
 
 \begin{frame}{How to realize this project with Yocto?}
+	% Simone
 	\begin{block}{How to do?}
 		How to implement the coffee machine project with Yocto?
 	\end{block}
@@ -359,6 +383,7 @@
 
 
 \begin{frame}{How to realize this project with Yocto?}
+	% Simone
 	\begin{block}{How to do?}
 		How to implement the coffee machine project with Yocto?
 	\end{block}
@@ -369,6 +394,7 @@
 \end{frame}
 
 \begin{frame}{Step 1: Create coffee layer}
+	% Simone
 	First let us create a layer where our app and image can be implemented:
 	\begin{itemize}
 		\item Create an own layer for this work\\
@@ -383,6 +409,7 @@
 \end{frame}
 
 \begin{frame}{Step 2: Seperate the coffee app}
+	% Simone
 	Now let us adapt the existing package qtdoc from meta-qt6 to add a package
 	containing only the wanted app:
 	\begin{itemize}
@@ -399,6 +426,7 @@
 
 
 \begin{frame}{Step 3: Create the coffee image}
+	% Simone
 	Next we can include the qtdoc-coffe package to an image
 	\begin{itemize}
 		\item Create a minimal-coffee.bb file for it in \emph{meta-coffee\/recipes-core\/images} and add\\
@@ -411,6 +439,7 @@
 \end{frame}
 
 \begin{frame}{Step 4: Add coffee systemd service}
+	% Simone
 	Now let us adapt the qtdoc bbappend further with a systemd service to start the app
 	directly.
 	\begin{itemize}
@@ -430,12 +459,14 @@
 \subsection{Coffee machine with Elbe}
 
 \begin{frame}{How to realize this project with Elbe?}
+	% Thomas
 	\begin{block}{How to do?}
 		How to implement the coffee machine project with Elbe?
 	\end{block}
 \end{frame}
 
 \begin{frame}{How to realize this project with Elbe?}
+	% Thomas
 	\begin{block}{Using the Debian Bookworm QT packages}
 		How to implement the coffee machine project with Elbe using the QT 6.4.2 packages provided by Debian Bookworm?
 	\end{block}
@@ -446,6 +477,7 @@
 
 
 \begin{frame}{Step 1: Ensure we can build the app}
+	% Thomas
 	First we should make sure we can build the app:
 	\begin{itemize}
 		\item Install the needed build dependencies:\\
@@ -461,6 +493,7 @@
 \end{frame}
 
 \begin{frame}{Step 2: Package the app - Debian metadata}
+	% Thomas
 	Next we should create a Debian package for our app.\\
 	To do this, we need to generate Debian metadata for the app:
 	\begin{itemize}
@@ -482,6 +515,7 @@
 \end{frame}
 
 \begin{frame}{Step 3: Package the app - fine-tune metadata}
+	% Thomas
 	Now we need to fine-tune the generated metadata:
 	\begin{itemize}
 		\item Add the build dependencies:
@@ -502,6 +536,7 @@
 \end{frame}
 
 \begin{frame}{Step 4: Package the app - configure pbuilder}
+	% Thomas
 	Our image is based on Debian Bookwork. Configure pbuilder:
 	\begin{itemize}
 		\item Create \emph{.pbuilderrc}:
@@ -517,6 +552,7 @@
 \end{frame}
 
 \begin{frame}{Step 5: Package the app - build the package}
+	% Thomas
 	Now we can build the app:
 	\begin{itemize}
 		\item Run \emph{pdebuild} in the folder containing the coffee app: \\ \emph{pdebuild -- --host-arch arm64}
@@ -525,6 +561,7 @@
 \end{frame}
 
 \begin{frame}{Step 6: Install the app}
+	% Thomas
 	\begin{itemize}
 		\item Add app to image description: \emph{$<$pkg variant="app"$>$coffee$<$/pkg$>$}
 		\item Build image with app:
@@ -541,6 +578,7 @@
 \end{frame}
 
 \begin{frame}{Step 7: Auto-start the app}
+	% Thomas
 	The final step is to automatically run the app on system startup.
 	\begin{itemize}
 		\item Create a systemd unit file to run the binary.
@@ -560,14 +598,16 @@
 \section{The End}
 
 \begin{frame}{The End}
+	% Thomas
 	\begin{block}{Any questions?}
 		We hope you enjoyed the talk.
 		Your questions are now welcome!
 	\end{block}
 \end{frame}
 
-\section{How to build a Raspberry Pi image?}
+% end of presentation
 
+\section{How to build a Raspberry Pi image?}
 
 \begin{frame}{Yocto: Raspberry Pi image}
 	\begin{itemize}
