@@ -161,7 +161,6 @@
 	\begin{itemize}
 		\item use the packages from an existing distribution
 		\item and create a solution-specific remix
-		\item by reusing the exiting binary packages
 		\item to build a custom image with customized configuration
 	\end{itemize}
 
@@ -209,7 +208,7 @@
 \begin{frame}{Yocto}
 	% Simone
 	\begin{block}{Whats included?}
-		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution and a SDK. It also provides Poky as a reference distribution. Layer for many boards are available.
+		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution and a SDK. It also provides Poky as a reference distribution. Layers for many boards are available.
 	\end{block}
 
 	\begin{itemize}
@@ -266,7 +265,7 @@
 
 	\begin{itemize}
 		\item Supports all major package managers
-		\item Image description using XML and config scripts
+		\item Image description using XML
 		\item Docs: \url{https://osinside.github.io/kiwi/}
 		\item Source: \url{https://github.com/OSInside/kiwi}
 	\end{itemize}
@@ -563,7 +562,8 @@
 \begin{frame}{Step 6: Install the app}
 	% Thomas
 	\begin{itemize}
-		\item Add app to image description: \emph{$<$pkg variant="app"$>$coffee$<$/pkg$>$}
+		\item Add app to image description: \\
+  			\emph{$<$pkg variant="app"$>$coffee$<$/pkg$>$}
 		\item Build image with app:
 		\small{\begin{itemize}
 			\item \emph{elbe control create\_project $>$ my.prj}
