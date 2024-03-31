@@ -161,6 +161,7 @@
 	\begin{itemize}
 		\item use the packages from an existing distribution
 		\item and create a solution-specific remix
+		\item by reusing the exiting binary packages
 		\item to build a custom image with customized configuration
 	\end{itemize}
 
@@ -208,7 +209,7 @@
 \begin{frame}{Yocto}
 	% Simone
 	\begin{block}{Whats included?}
-		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution and a SDK. It also provides Poky as a reference distribution. Layers for many boards are available.
+		Provides Metadata (recipes, configuration, data how things are built), BitBake (buildsystem) to build a custom embedded Linux distribution and a SDK. It also provides Poky as a reference distribution. Layer for many boards are available.
 	\end{block}
 
 	\begin{itemize}
@@ -265,7 +266,7 @@
 
 	\begin{itemize}
 		\item Supports all major package managers
-		\item Image description using XML
+		\item Image description using XML and config scripts
 		\item Docs: \url{https://osinside.github.io/kiwi/}
 		\item Source: \url{https://github.com/OSInside/kiwi}
 	\end{itemize}
@@ -413,7 +414,7 @@
 	containing only the wanted app:
 	\begin{itemize}
 		\item Create a qtdoc\_git.bbappend file for qtdoc in\\
-			\emph{meta-coffee\/recipes-qt\/qt6}
+			\emph{meta-coffee/recipes-qt/qt6}
 		\item Create the qtdoc-coffee package\\
 			\emph{PACKAGE\_BEFORE\_PN =+ "qtdoc-coffee"}	
 		\item And add relevant files for the app\\
@@ -428,7 +429,7 @@
 	% Simone
 	Next we can include the qtdoc-coffe package to an image
 	\begin{itemize}
-		\item Create a minimal-coffee.bb file for it in \emph{meta-coffee\/recipes-core\/images} and add\\
+		\item Create a minimal-coffee.bb file for it in \emph{meta-coffee/recipes-core/images} and add\\
 			\emph{inherit core-image}
 		\item Add qtdoc-coffee and dependcies\\
 			\emph{IMAGE\_INSTALL += "weston qtimageformats qtsvg qtdoc-coffee"}	
@@ -562,8 +563,7 @@
 \begin{frame}{Step 6: Install the app}
 	% Thomas
 	\begin{itemize}
-		\item Add app to image description: \\
-			\emph{$<$pkg variant="app"$>$coffee$<$/pkg$>$}
+		\item Add app to image description: \emph{$<$pkg variant="app"$>$coffee$<$/pkg$>$}
 		\item Build image with app:
 		\small{\begin{itemize}
 			\item \emph{elbe control create\_project $>$ my.prj}
